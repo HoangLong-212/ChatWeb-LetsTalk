@@ -1,0 +1,40 @@
+@import "normalize.css";
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+// :root {
+//   //color
+//   --green-dark: #4ca101;
+//   --green-light: #0ac922;
+//   --green-mindaro: #a7e000;
+//   --card-background: #EBEBEB;
+
+//   //size
+//   --default-layout-width: calc(1120 / 1280 * 100%);
+//   --padding-layout: calc(80 / 1280 * 100%);
+// }
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-size: 1.6rem;
+  line-height: 1.5;
+  text-rendering: optimizeSpeed;
+}
+
+// button,
+// input,
+// [tabindex] {
+//     outline: none;
+//     border: none;
+// }
+
+a[href] {
+  text-decoration: none;
+}
