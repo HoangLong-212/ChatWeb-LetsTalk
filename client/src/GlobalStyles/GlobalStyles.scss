@@ -6,18 +6,6 @@
   box-sizing: border-box;
 }
 
-// :root {
-//   //color
-//   --green-dark: #4ca101;
-//   --green-light: #0ac922;
-//   --green-mindaro: #a7e000;
-//   --card-background: #EBEBEB;
-
-//   //size
-//   --default-layout-width: calc(1120 / 1280 * 100%);
-//   --padding-layout: calc(80 / 1280 * 100%);
-// }
-
 html {
   font-size: 62.5%;
 }
@@ -35,6 +23,25 @@ body {
 //     border: none;
 // }
 
+a,
+button,
+div,
+input,
+label,
+select,
+span,
+strong,
+textarea {
+  outline: none;
+}
+
 a[href] {
   text-decoration: none;
+}
+
+img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  cursor: pointer;
 }
