@@ -1,9 +1,9 @@
-import "./GlobalStyles.scss"
+import "./GlobalStyles.scss";
+import "./colors.scss";
+import "./value.scss";
 
-function GlobalStyles({children}) {
-  return (
-    <div>GlobalStyles</div>
-  )
+function GlobalStyles({ children }) {
+  return children;
 }
 
-export default GlobalStyles
+export default GlobalStyles;
