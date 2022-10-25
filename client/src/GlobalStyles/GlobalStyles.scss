@@ -8,20 +8,15 @@
 
 html {
   font-size: 62.5%;
+  scroll-behavior: smooth;
 }
 
 body {
   font-size: 1.6rem;
   line-height: 1.5;
   text-rendering: optimizeSpeed;
+  font-family: "Whitney", sans-serif !important;
 }
-
-// button,
-// input,
-// [tabindex] {
-//     outline: none;
-//     border: none;
-// }
 
 a,
 button,
@@ -44,4 +39,22 @@ img {
   height: 100%;
   object-fit: cover;
   cursor: pointer;
+}
+
+//scrollbar
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+// ::-webkit-scrollbar-track {
+//   // background-color: #fff;
+// }
+
+::-webkit-scrollbar-thumb {
+  background-clip: padding-box;
+  border: 2px solid transparent;
+  border-radius: 4px;
+  background-color: var(--server-list);
+  min-height: 40px;
 }
