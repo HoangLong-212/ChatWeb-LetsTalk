@@ -1,0 +1,20 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.messenger {
+  display: flex;
+  flex: 1;
+}
+
+.input-mess {
+  position: relative;
+  width: 100%;
+  flex-shrink: 0;
+  padding-left: 16px;
+  padding-right: 16px;
+  margin-top: -8px;
+  margin-bottom: 24px;
+}

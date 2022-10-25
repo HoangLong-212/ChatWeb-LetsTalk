@@ -3,6 +3,7 @@ import classNames from "classnames/bind";
 import styles from "./DefaultLayout.module.scss";
 import LeftNav from "../components/LeftNav/LeftNav";
 import SideBar from "../components/SideBar/SideBar";
+import HeaderContent from "../components/HeaderContent/HeaderContent";
 
 const cx = classNames.bind(styles);
 function DefaultLayout({ children }) {
@@ -11,7 +12,12 @@ function DefaultLayout({ children }) {
       <LeftNav className={cx("left-nav")} />
       <div className={cx("base")}>
         <SideBar className={cx("sub-sidebar")} />
-        <div className={cx("container")}>{children}</div>
+        <div className={cx("container")}>
+          <div className={cx("header")}>
+            <HeaderContent />
+          </div>
+          <div className={cx("content")}>{children}</div>
+        </div>
       </div>
     </div>
   );

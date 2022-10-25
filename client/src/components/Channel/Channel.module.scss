@@ -1,0 +1,33 @@
+.wrapper {
+  padding-top: 16px;
+}
+
+.inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 24px;
+  padding-right: 8px;
+  cursor: pointer;
+}
+
+.main-content {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  font-size: 1.3rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  overflow: hidden;
+
+  p {
+    flex: 1;
+  }
+}
+
+.main-content,
+.icons-add-channel-item {
+  &:hover {
+    color: var(--text-channel-hover);
+  }
+}

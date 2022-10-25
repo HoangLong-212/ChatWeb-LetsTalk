@@ -1,11 +1,38 @@
 :root {
-  --background-dark-primary: #202225;
-  --background-dark-secondary: #2f3136;
-  --background-item: #36393f;
-  --background-blue: #5865f2;
-  --green-primary: #3ba55d;
-
-  --elevation-low: 0 1px 0 hsla(240, calc(var(1, 1) * 11.1%), 1.8%, 0.2),
-    0 1.5px 0 hsla(240, calc(var(1, 1) * 7.7%), 2.5%, 0.05),
-    0 2px 0 hsla(240, calc(var(1, 1) * 11.1%), 1.8%, 0.05);
+  --black: #000;
+  --tooltip-user-profile: #18191c;
+  --server-list: #202225;
+  --not-quite-black: #23272b;
+  --dark-but-not-black: #2c2f33;
+  --channel-list: #2f3136;
+  --channel-list-hover: #3c3f45;
+  --channel-list-active: #42454D;
+  --text-channel: #96989D;
+  --text-channel-hover: #DCDDDE;
+  --panels: #292b2f;
+  --background-icon-left-bar: #36393f;
+  --message-bar: #40444b;
+  --icons-dark-grey: #4f5660;
+  --invisible: #747f8d;
+  --greyple: #99aab5;
+  --icons-light-grey: #c0bcbc;
+  --white: #fff;
+  --streaming-purple: #593695;
+  --bravery-purple: #9c84ef;
+  --nitro-pink: #ff6bfa;
+  --fuchsia: #eb459f;
+  --red: #ed4245;
+  --brilliance-red: #f07d5f;
+  --hypesquad-events: #fbb848;
+  --yellow: #f7de52;
+  --bug-hunter-gold-2: #ffd56c;
+  --bug-hunter-gold-1: #ffeac0;
+  --bug-hunter-green-2: #b4e1ce;
+  --bug-hunter-green-1: #3ba561;
+  --green: #58f287;
+  --balance-aqua: #45ddc0;
+  --light-blurple: #949cf7;
+  --developer-blue: #3e70dd;
+  --highlighted: #216add;
+  --blurple: #5865f2;
 }

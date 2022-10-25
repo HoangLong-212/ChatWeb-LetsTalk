@@ -1,0 +1,10 @@
+.wrapper {
+  // #202225
+  :global {
+    .ant-input,
+    .ant-input-password {
+      background-color: var(--server-list);
+    }
+    
+  }
+}

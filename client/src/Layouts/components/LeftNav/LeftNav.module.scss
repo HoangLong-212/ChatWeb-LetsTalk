@@ -4,27 +4,32 @@
   flex-direction: column;
   padding-top: 12px;
   width: 72px;
-  background-color: var(--background-dark-primary);
-  // overflow: hidden scroll;
+  background-color: var(--server-list);
+  overflow: hidden scroll;
+  padding-right: 0;
 }
 
 .strikeThrough {
   height: 2px;
   width: 32px;
   border-radius: 1px;
-  background-color: var(--background-item);
+  background-color: var(--text-channel);
   margin-bottom: 8px;
 }
 
 .add-Server {
   * {
-    color: #3ba55d;
+    color: var(--bug-hunter-green-1);
     font-size: 24px;
   }
   &:hover {
-    background-color: var(--green-primary) !important;
+    background-color: var(--bug-hunter-green-1) !important;
     * {
-      color: #fff;
+      color: var(--white);
     }
   }
+}
+
+.wrapper::-webkit-scrollbar {
+  width: 0px;
 }
