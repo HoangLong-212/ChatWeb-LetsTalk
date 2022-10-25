@@ -1,20 +1,24 @@
-import express from "express";
-import bodyParser from "body-parser";
-import cors from "cors";
-import mongoose from "mongoose";
-import posts from "./routers/posts.js";
-
+const express = require('express')
 const app = express();
-const PORT = process.env.PORT || 5000;
 
-const URI =
-  "mongodb+srv://admin:vSdXsr6tiZbCtHnn@cluster0.uoft8tm.mongodb.net/?retryWrites=true&w=majority";
+require('dotenv').config()
+const mongoose = require('mongoose');
+const bodyParser = require('body-parser')
+const cors = require('cors')
+const morgan = require('morgan');
+
+const PORT = process.env.PORT || 5000;
+const URI = process.env.DB_CONNECTION
 
 app.use(bodyParser.json({ limit: "30mb" }));
 app.use(bodyParser.urlencoded({ extended: true, limit: "30mb" }));
 app.use(cors());
+app.use(morgan('dev'));
 
-app.use("/posts", posts);
+
+const userRouter = require('./routers/user')
+
+app.use('/user',userRouter)
 
 mongoose
   .connect(URI, { useNewUrlParser: true, useUnifiedTopology: true })
