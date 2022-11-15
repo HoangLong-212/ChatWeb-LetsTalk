@@ -6,11 +6,7 @@ const messageSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
     },
-    timestamp: String,
-    channel_id:{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Channel',
-    },
+    timestamp: Date,
     content: {
         type: String,
     },

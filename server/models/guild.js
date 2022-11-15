@@ -15,6 +15,10 @@ const guildSchema = mongoose.Schema({
         ref: 'User',
         require: true
     },
+    members:[{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+    }],
     channels:[{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Channel',
