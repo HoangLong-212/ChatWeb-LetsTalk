@@ -8,3 +8,9 @@ const upload = require('../middleware/upload');
 router
     .route('/createGuild')
     .post(auth, upload.single("avatar"), guildController.createGuild)
+
+router
+    .route('/:guildId')
+    .patch(auth, guildController.renameGuild)
+
+module.exports = router
