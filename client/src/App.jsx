@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { DefaultLayout } from "./Layouts";
 import { publishRoutes } from "./routers";
 import ScrollToTop from "./routers/ScrollToTop";
+
 function App() {
   return (
     <div>

@@ -3,10 +3,10 @@ import { Button, Form, Input } from "antd";
 // import Button from "@/components/General/Button/Button";
 import { Link } from "react-router-dom";
 import classNames from "classnames/bind";
-import styles from "./Login.module.scss";
+import styles from "./Register.module.scss";
 
 const cx = classNames.bind(styles);
-function Login() {
+function Register() {
   return (
     <div className={cx("wrapper")}>
       <Form
@@ -23,6 +23,24 @@ function Login() {
             {
               required: true,
               message: "Please input your email!",
+            },
+          ]}
+        >
+          <Input
+          // value={loginForm.email}
+          // onChange={(e) =>
+          //   setLoginForm({ ...loginForm, email: e.target.value })
+          // }
+          />
+        </Form.Item>
+
+        <Form.Item
+          label="Username"
+          name="username"
+          rules={[
+            {
+              required: true,
+              message: "Please input your username!",
             },
           ]}
         >
@@ -52,23 +70,17 @@ function Login() {
           />
         </Form.Item>
         <Form.Item>
-          <Link to={{}}>Forgot password?</Link>
-        </Form.Item>
-        <Form.Item>
-          <Button style={{ width: "100%" }} type="primary" size="large">
-            Sign in
+          <Button style={{ width: "100%", marginTop: "12px"}} type="primary" size="large">
+            Continue
           </Button>
         </Form.Item>
 
         <Form.Item>
-          <span>
-            Don’t have an account?
-            <Link to="/register"> Register</Link>
-          </span>
+          <Link to="/login"> Already have an account?</Link>
         </Form.Item>
       </Form>
     </div>
   );
 }
 
-export default Login;
+export default Register;

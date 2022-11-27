@@ -24,7 +24,7 @@ exports.deleteAll = async () => {
     }
 }
 
-exports.regiter = async (req, res) => {
+exports.register = async (req, res) => {
     const { email, password, username } = req.body
 
     const user = await User.findOne({ email: email })

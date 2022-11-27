@@ -5,3 +5,9 @@ p {
 .ant-form-item {
   margin: 0 0 14px !important;
 }
+
+.ant-input,
+.ant-input-password {
+  background-color: var(--server-list) !important;
+  line-height: 2 !important;
+}

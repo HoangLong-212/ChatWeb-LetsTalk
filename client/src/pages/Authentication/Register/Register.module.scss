@@ -1,10 +1,6 @@
 .wrapper {
   // #202225
   :global {
-    .ant-input,
-    .ant-input-password {
-      background-color: var(--server-list);
-    }
     .ant-input-affix-wrapper-status-error:not(.ant-input-affix-wrapper-disabled):not(.ant-input-affix-wrapper-borderless).ant-input-affix-wrapper,
     .ant-input-affix-wrapper-status-error:not(.ant-input-affix-wrapper-disabled):not(.ant-input-affix-wrapper-borderless).ant-input-affix-wrapper:hover,
     .ant-input-status-error:not(.ant-input-disabled):not(.ant-input-borderless).ant-input,
