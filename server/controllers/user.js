@@ -4,7 +4,8 @@ const jwt = require('jsonwebtoken')
 
 const User = require('../models/user')
 
-const imageController = require('../controllers/image');
+const imageService = require('../service/image');
+const channelService = require('../service/channel')
 
 exports.getAll = async (req, res) => {
     const data = await User.find().populate('avatar');
@@ -43,7 +44,7 @@ exports.register = async (req, res) => {
 
     const hashedPassword = await argon2.hash(password)
 
-    //const avtDefault = await imageController.getAvtUserDefault()
+    //const avtDefault = await imageService.getAvtUserDefault()
 
     ///fake id
     const fake_id = Math.floor(Math.random() * (9999 - 1000)) + 1000;
@@ -74,7 +75,7 @@ exports.logIn = async (req, res) => {
             message: 'Missing email and/or password'
         })
 
-    const user = await User.findOne({ email: email }).populate('avatar')
+    const user = await User.findOne({ email: email }).populate('avatar').populate('guilds').populate('channels')
 
     if (!user) {
         console.log('type: Not exists user')
@@ -236,8 +237,11 @@ exports.addFriend = async (req, res) => {
             //addfriend
             user.pendingFriends.remove(friendId)
             user.friendIds.push(friendId)
-
             friend.friendIds.push(userId)
+
+            const newChannel = await channelService.createChannel('Username', [user, friend], 'DM')
+            user.channels.push(newChannel)
+            friend.channels.push(newChannel)
 
             await user.save()
             await friend.save()
@@ -246,6 +250,7 @@ exports.addFriend = async (req, res) => {
                 message: 'Add friend'
             });
         } else {
+            console.log('send a friend request')
             //send a friend request
             if (!friend.pendingFriends.includes(userId)) {
                 friend.pendingFriends.push(userId)
@@ -301,10 +306,10 @@ exports.upAvatar = async (req, res) => {
     try {
         const user = await User.findById(id).populate('avatar')
         if (user.avatar!= undefined && user.avatar.imageId != '001') {
-            await imageController.destroyImage(user.avatar)
+            await imageService.destroyImage(user.avatar)
         }
         if (req.file == undefined) {
-            user.avatar = await imageController.getAvtUserDefault()
+            user.avatar = await imageService.getAvtUserDefault()
             await user.save()
             return res.status(200).json({
                 success: false,
@@ -312,7 +317,7 @@ exports.upAvatar = async (req, res) => {
                 avatar: user.avatar
             })
         }
-        const image = await imageController.upload(req.file.path)
+        const image = await imageService.upload(req.file.path)
         user.avatar = image
         await user.save()
         res.status(200).json({

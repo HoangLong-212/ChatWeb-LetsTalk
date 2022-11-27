@@ -9,8 +9,8 @@ const channelSchema = mongoose.Schema({
     },
     type: {
         type: String,
-        enum:['DM','GUILD_VOICE','GROUP_DM'],
-    },
+        enum:['DM','GUILD_VOICE','GUILD_DM'],
+    },  
     members:[{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
