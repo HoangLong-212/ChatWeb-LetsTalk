@@ -17,7 +17,9 @@ function AuthenticationLayout({ children }) {
               <p>We're are so excited to see you again!</p>
             </div>
           ) : (
-            "Sign Up"
+            <div className={cx("description")}>
+              <strong>Create an account</strong>
+            </div>
           )}
         </h1>
         {children}
