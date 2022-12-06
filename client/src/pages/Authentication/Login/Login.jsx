@@ -1,12 +1,35 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Form, Input } from "antd";
 // import Button from "@/components/General/Button/Button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import classNames from "classnames/bind";
 import styles from "./Login.module.scss";
+import { useDispatch, useSelector } from "react-redux";
+import { loginRequest, userLoginState$ } from "src/redux/slice/userLoginSlice";
 
 const cx = classNames.bind(styles);
 function Login() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const authLogin = useSelector(userLoginState$);
+  const [loginForm, setLoginForm] = useState({
+    email: "",
+    password: "",
+  });
+
+  useEffect(() => {
+    if (authLogin.success) {
+      console.log(authLogin.message);
+      navigate("/");
+    } else {
+      console.log(authLogin.message);
+    }
+  }, [authLogin]);
+
+  const handleLogin = () => {
+    dispatch(loginRequest(loginForm));
+  };
+
   return (
     <div className={cx("wrapper")}>
       <Form
@@ -27,10 +50,10 @@ function Login() {
           ]}
         >
           <Input
-          // value={loginForm.email}
-          // onChange={(e) =>
-          //   setLoginForm({ ...loginForm, email: e.target.value })
-          // }
+            value={loginForm.email}
+            onChange={(e) =>
+              setLoginForm({ ...loginForm, email: e.target.value })
+            }
           />
         </Form.Item>
 
@@ -45,17 +68,22 @@ function Login() {
           ]}
         >
           <Input.Password
-          // value={loginForm.password}
-          // onChange={(e) =>
-          //   setLoginForm({ ...loginForm, password: e.target.value })
-          // }
+            value={loginForm.password}
+            onChange={(e) =>
+              setLoginForm({ ...loginForm, password: e.target.value })
+            }
           />
         </Form.Item>
         <Form.Item>
           <Link to={{}}>Forgot password?</Link>
         </Form.Item>
         <Form.Item>
-          <Button style={{ width: "100%" }} type="primary" size="large">
+          <Button
+            style={{ width: "100%" }}
+            type="primary"
+            size="large"
+            onClick={handleLogin}
+          >
             Sign in
           </Button>
         </Form.Item>

@@ -1,5 +1,10 @@
+import { all } from "redux-saga/effects";
+
+import loginSaga from "./loginSaga";
+import registerSaga from "./registerSaga";
+
 function* mySaga() {
-  console.log("mySaga");
+  yield all([loginSaga(), registerSaga()]);
 }
 
 export default mySaga;
