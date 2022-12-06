@@ -3,6 +3,7 @@ const router = express.Router()
 
 const guildController = require('../controllers/guild')
 const auth = require('../middleware/auth')
+const checkAdmin = require('../middleware/checkAdmin')
 const upload = require('../middleware/upload');
 
 router
@@ -10,7 +11,7 @@ router
     .post(auth, upload.single("avatar"), guildController.createGuild)
 
 router
-    .route('/:guildId')
-    .patch(auth, guildController.renameGuild)
+    .route('/:guildId/rename')
+    .post(auth, checkAdmin, guildController.renameGuild)
 
 module.exports = router

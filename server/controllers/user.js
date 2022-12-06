@@ -31,20 +31,20 @@ exports.regiter = async (req, res) => {
     const user = await User.findOne({ email: email })
 
     if (!email || !password)
-        return res.status(400).json({
+        return res.status(201).json({
             success: false,
             message: 'Missing email and/or password'
         })
 
     if (user)
-        return res.status(400).json({
+        return res.status(201).json({
             success: false,
             message: 'register fail, user exists'
         })
 
     const hashedPassword = await argon2.hash(password)
 
-    //const avtDefault = await imageService.getAvtUserDefault()
+    const avtDefault = await imageService.getAvtUserDefault()
 
     ///fake id
     const fake_id = Math.floor(Math.random() * (9999 - 1000)) + 1000;
@@ -56,7 +56,7 @@ exports.regiter = async (req, res) => {
         password: hashedPassword,
         id_fake: fake_id,
         role: 'user',
-        //avatar: avtDefault._id.toString()
+        avatar: avtDefault._id
     })
     await newUser.save()
     return res.status(200).json({
@@ -70,7 +70,7 @@ exports.logIn = async (req, res) => {
     const { email, password } = req.body
 
     if (!email || !password)
-        return res.status(400).json({
+        return res.status(201).json({
             success: false,
             message: 'Missing email and/or password'
         })
@@ -79,7 +79,7 @@ exports.logIn = async (req, res) => {
 
     if (!user) {
         console.log('type: Not exists user')
-        return res.status(200).json({
+        return res.status(201).json({
             success: false,
             message: 'Not exists user'
         })
@@ -88,7 +88,7 @@ exports.logIn = async (req, res) => {
     const passwordValid = await argon2.verify(user.password, password)
 
     if (!passwordValid)
-        return res.status(400).json({
+        return res.status(201).json({
             success: false,
             message: 'Incorrect phoneNumber or password'
         })
@@ -119,22 +119,22 @@ exports.getOne = async (req, res) => {
     }
 }
 
-exports.getAllFriend = async (req,res)=>{
+exports.getAllFriend = async (req, res) => {
     const id = req.userId
     try {
         const user = await User.findById(id)
         let listFriendData = [];
         for (var index = 0; index < user.friendIds.length; index++) {
             const friend = await User.findById(user.friendIds[index]).populate('avatar')
-            if(friend){
+            if (friend) {
                 listFriendData.push({
                     _id: friend._id.toString(),
                     username: friend.username,
                     id_fake: friend.id_fake,
-                    avatar: friend.avatar,
+                    avatarUrl: friend.avatar.imageUrl,
                     emotion: friend.emotion,
                     status: friend.status
-                }) 
+                })
             }
         }
         return res.status(200).json({
@@ -151,27 +151,28 @@ exports.getAllFriend = async (req,res)=>{
     }
 }
 
-exports.getOnlFriend = async(req,res)=>{
+exports.getOnlFriend = async (req, res) => {
     const id = req.userId
     try {
         const user = await User.findById(id)
         let listFriendData = [];
+
         for (var index = 0; index < user.friendIds.length; index++) {
             const friend = await User.findById(user.friendIds[index]).populate('avatar')
-            if(friend && friend.status == "Online"){
+            if (friend && friend.status == "Online") {
                 listFriendData.push({
                     _id: friend._id.toString(),
                     username: friend.username,
                     id_fake: friend.id_fake,
-                    avatar: friend.avatar,
+                    avatarUrl: friend.avatar.imageUrl,
                     emotion: friend.emotion,
                     status: friend.status
-                }) 
+                })
             }
         }
         return res.status(200).json({
             success: true,
-            message: 'Get list friend',
+            message: 'Get list online friend',
             listFriendData
         })
 
@@ -184,22 +185,22 @@ exports.getOnlFriend = async(req,res)=>{
     }
 }
 
-exports.getPendingFriend = async(req,res)=>{
+exports.getPendingFriend = async (req, res) => {
     const id = req.userId
     try {
         const user = await User.findById(id)
         let listPendingFriendData = [];
         for (var index = 0; index < user.pendingFriends.length; index++) {
             const friend = await User.findById(user.pendingFriends[index]).populate('avatar')
-            if(friend){
+            if (friend) {
                 listPendingFriendData.push({
                     _id: friend._id.toString(),
                     username: friend.username,
                     id_fake: friend.id_fake,
-                    avatar: friend.avatar,
+                    avatarUrl: friend.avatar.imageUrl,
                     emotion: friend.emotion,
                     status: friend.status
-                }) 
+                })
             }
         }
         return res.status(200).json({
@@ -259,7 +260,7 @@ exports.addFriend = async (req, res) => {
                     success: true,
                     message: 'Send a friend request'
                 });
-            }else{
+            } else {
                 return res.status(201).json({
                     success: false,
                     message: 'Send a friend request'
@@ -286,7 +287,7 @@ exports.changePassword = async (req, res) => {
     const passwordValid = await argon2.verify(user.password, password)
 
     if (!passwordValid)
-        return res.status(400).json({
+        return res.status(201).json({
             success: false,
             message: 'Incorrect old password'
         })
@@ -305,17 +306,15 @@ exports.upAvatar = async (req, res) => {
     const id = req.userId;
     try {
         const user = await User.findById(id).populate('avatar')
-        if (user.avatar!= undefined && user.avatar.imageId != '001') {
-            await imageService.destroyImage(user.avatar)
-        }
         if (req.file == undefined) {
-            user.avatar = await imageService.getAvtUserDefault()
-            await user.save()
-            return res.status(200).json({
+            return res.status(201).json({
                 success: false,
                 message: "Up avatar default",
                 avatar: user.avatar
             })
+        }
+        if (user.avatar != undefined && user.avatar.imageId != '001') {
+            await imageService.destroyImage(user.avatar)
         }
         const image = await imageService.upload(req.file.path)
         user.avatar = image
@@ -325,7 +324,6 @@ exports.upAvatar = async (req, res) => {
             message: "Up avatar successful",
             avatar: user.avatar
         })
-
     } catch (error) {
         console.log(error)
     }

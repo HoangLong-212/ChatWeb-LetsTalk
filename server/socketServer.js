@@ -1,5 +1,6 @@
 var users = []
 const User = require('./models/user')
+const messageController = require('./service/message')
 
 const SocketServer = (socket, io) => {
 
@@ -23,7 +24,7 @@ const SocketServer = (socket, io) => {
                 socket.join(channel._id.toString())
             });
         });
-        console.log(socket)
+        //console.log(socket)
     })
 
     // socket.on('test',(data) => {
@@ -53,25 +54,27 @@ const SocketServer = (socket, io) => {
     // })
 
     socket.on('message', async (data) => {
-        const sender = await clients.find(client => client.socketId == socket.id)
-        const roomId = data
-        io.to(`${target.socketId}`).to(`${socket.id}`).emit('message', ({ ...data, senderId: sender.userId }))
+        console.log(data)
+        const {timestamp, content, isImage, channel_id} = data
+        //author, timestamp, content, isImage, channel_id
+        const userSocket = await users.find(user => user.socketId == user.id)
+        const mess = await messageController.addMessage(sender, timestamp, content, isImage, channel_id)
+        console.log(mess)
+        const roomId = channel_id
+        io.to(`${roomId}`).emit('message',({mess}));
+        //io.to(`${target.socketId}`).to(`${socket.id}`).emit('message', ({ ...data, senderId: sender.userId }))
     })
 
 ////////////-- disconnect --//////////////
 
     socket.on('logout', async () => {
-        // const client = await clients.find(client => client.socketId == socket.id)
-        // if (!client) {
-        //     return;
-        // }
-        // if(client.status == status.onConnect){
-        //     userOnConnects.splice(userOnConnects.indexOf(client), 1)
-        // }
-        // clients.splice(clients.indexOf(client), 1);
-        // console.log(clients)
-        // console.log('logout socket')
-
+        const user = await users.find(user => user.socketId == socket.id)
+        if (!user) {
+            return;
+        }
+        users.splice(users.indexOf(client), 1);
+        console.log(users)
+        console.log('logout socket')
     })
 
 }

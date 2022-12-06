@@ -21,6 +21,8 @@ exports.createGuild = async (req, res) => {
         if (req.file != undefined) {
             const image = await imageService.upload(req.file.path)
             newGuild.avatar = image
+        } else {
+            newGuild.avatar = imageService.getAvtGuildDefault()
         }
         await newGuild.members.push(user._id)
         await newGuild.save()
@@ -41,22 +43,22 @@ exports.createGuild = async (req, res) => {
 }
 
 exports.renameGuild = async (req, res) => {
-    const id = req.userId
     const { newServerName } = req.body
     const idGuild = req.params.guildId
     try {
         const guild = await Guild.findById(idGuild)
-        console.log(guild._id)
-        if (guild.author == id) {
-            guild.name = newServerName
-            res.status(200).json({
-                success: true,
-                message: 'rename guild',
-                guild
-            })
-        }
+        guild.name = newServerName
+        guild.save()
+        res.status(200).json({
+            success: true,
+            message: 'rename guild',
+            guild
+        })
     } catch (error) {
-
+        return res.status(201).json({
+            success: false,
+            message: 'Rename guild err',
+        })
     }
 }
 
@@ -78,4 +80,20 @@ exports.deleteGuild = async (req, res) => {
         console.log('err delete guild')
     }
 
+}
+exports.addMember = async (req, res) => {
+    const id = req.userId
+    const idGuild = req.params.guildId
+    const idMember = req.params.memberId
+    try {
+        const guild = await Guild.findById(idGuild)
+        const member = await User.findById(idMember)
+        console.log(guild._id)
+        await guild.members.push(member._id)
+        guild.channels.forEach(async channel => {
+            await channel.members.push(member._id)
+        });
+    } catch (error) {
+        console.log('err delete guild')
+    }
 }

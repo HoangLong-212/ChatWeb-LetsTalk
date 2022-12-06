@@ -21,8 +21,16 @@ router
 
 router
     .route('/friend')
-    //.get(auth, userController.getListFriend)
+    .get(auth, userController.getAllFriend)
     .post(auth, userController.addFriend)
 
+router
+    .route('/friend/getOnlFriend')
+    .get(auth, userController.getOnlFriend)
+
+router
+    .route('/friend/getPendingFriend')
+    .get(auth, userController.getPendingFriend)
+ 
 
 module.exports = router
