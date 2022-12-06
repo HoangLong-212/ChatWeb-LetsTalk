@@ -30,6 +30,8 @@
   }
 }
 
-.wrapper::-webkit-scrollbar {
-  width: 0px;
+.wrapper {
+  &::-webkit-scrollbar {
+    width: 0px;
+  }
 }

@@ -12,7 +12,7 @@ router
 router
     .route('/')
     .get(auth, userController.getOne)
-    .post(userController.regiter)
+    .post(userController.register)
     .delete(userController.deleteAll)
 
 router
