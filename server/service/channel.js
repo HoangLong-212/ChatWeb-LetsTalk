@@ -36,9 +36,15 @@ exports.createChannel = async (name, members, type) => {
 exports.addMember = async (userId, channelId) => {
     try {
         const channel = await Channel.findById(channelId)
-        channel.members.push(user)
+        if(channel.members.includes(userId)){
+            console.log('list includes member')
+            return false;
+        }
+        channel.members.push(userId)
         await channel.save()
+        return true;
     } catch (error) {
         console.log('err add member')
+        return false;
     }
 }

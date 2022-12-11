@@ -8,12 +8,13 @@ module.exports = async (req, res, next) => {
         if (guild.author == id) {
             console.log("check admin")
             next()
+        } else {
+            console.log("check admin123")
+            return res.status(201).json({
+                success: false,
+                message: "You are not the server owner"
+            })
         }
-        console.log("check admin123")
-        return res.status(201).json({
-            success: false,
-            message: "You are not the server owner"
-        })
     }
     catch (error) {
         console.log(error)

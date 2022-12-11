@@ -14,4 +14,17 @@ router
     .route('/:guildId/rename')
     .post(auth, checkAdmin, guildController.renameGuild)
 
+router
+    .route('/:guildId/createChannel')
+    .post(auth, checkAdmin, guildController.createChannel)
+
+router
+    .route('/:guildId/delelteGuild')
+    .post(auth, checkAdmin, guildController.deleteGuild)
+
+router
+    .route('/:guildId/add/:memberId')
+    .get(auth, checkAdmin, guildController.addMember)
+
+
 module.exports = router

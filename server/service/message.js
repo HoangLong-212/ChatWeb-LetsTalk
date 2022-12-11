@@ -3,8 +3,8 @@ const mongoose = require('mongoose')
 const Channel = require('../models/channel')
 const Message = require('../models/message')
 
-exports.addMessage = async (data) => {
-    const {author, timestamp, content, isImage, channel_id} = data 
+exports.addMessage = async (author, timestamp, content, isImage, channel_id) => {
+
     try {
         const newMessage = new Message({
             _id: new mongoose.Types.ObjectId(),

@@ -7,7 +7,7 @@ exports.getAvtUserDefault = async () => {
 }
 
 exports.getAvtGuildDefault = async () => {
-    return await Image.findOne({ imageId: '002' })
+    return await Image.findOne({ imageId: '001' })
 }
 
 

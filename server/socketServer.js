@@ -24,45 +24,17 @@ const SocketServer = (socket, io) => {
                 socket.join(channel._id.toString())
             });
         });
-        //console.log(socket)
     })
-
-    // socket.on('test',(data) => {
-    //     const {roomId} = data
-    //     io.to(roomId).emit('test','test')
-    // })
-
-    // socket.on('join-room',(data) => {
-    //     const {roomId} = data
-    //     socket.join(roomId)
-    //     console.log('join-room' + roomId)
-    // })
-
-    // socket.on('editClients', (data) => {
-    //     const { targetId } = data
-    //     const client = clients.find(client => client.socketId == socket.id)
-    //     const target = clients.find(client => client.userId == targetId)
-    //     console.log('clients: ')
-    //     console.log(clients)
-    //     if (target) {
-    //         console.log('edit: ')
-    //         clients = EditClients(clients, client.userId, target.userId, status.onConnect)
-    //     }
-    //     console.log('--------------clients: ')
-    //     console.log(clients)
-
-    // })
 
     socket.on('message', async (data) => {
         console.log(data)
         const {timestamp, content, isImage, channel_id} = data
         //author, timestamp, content, isImage, channel_id
-        const userSocket = await users.find(user => user.socketId == user.id)
-        const mess = await messageController.addMessage(sender, timestamp, content, isImage, channel_id)
+        const sender = await users.find(user => user.socketId == socket.id)
+        const user = await User.findById(sender.userId)
+        const mess = await messageController.addMessage(user._id, timestamp, content, isImage, channel_id)
         console.log(mess)
-        const roomId = channel_id
-        io.to(`${roomId}`).emit('message',({mess}));
-        //io.to(`${target.socketId}`).to(`${socket.id}`).emit('message', ({ ...data, senderId: sender.userId }))
+        io.to(`${channel_id}`).emit('message',({mess}));
     })
 
 ////////////-- disconnect --//////////////

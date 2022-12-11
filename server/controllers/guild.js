@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 
 const Guild = require('../models/guild')
+const Channel = require('../models/channel')
 const User = require('../models/user')
 const imageService = require('../service/image');
 const channelService = require('../service/channel')
@@ -22,7 +23,7 @@ exports.createGuild = async (req, res) => {
             const image = await imageService.upload(req.file.path)
             newGuild.avatar = image
         } else {
-            newGuild.avatar = imageService.getAvtGuildDefault()
+            newGuild.avatar = await imageService.getAvtGuildDefault()
         }
         await newGuild.members.push(user._id)
         await newGuild.save()
@@ -63,37 +64,68 @@ exports.renameGuild = async (req, res) => {
 }
 
 exports.deleteGuild = async (req, res) => {
-    const id = req.userId
     const idGuild = req.params.guildId
     try {
         const guild = await Guild.findById(idGuild)
-        console.log(guild._id)
-        if (guild.author == id) {
-            guild.name = newServerName
-            res.status(200).json({
-                success: true,
-                message: 'rename guild',
-                guild
-            })
-        }
+
+
+        res.status(200).json({
+            success: true,
+            message: 'Delete guild',
+            guild
+        })
+
     } catch (error) {
         console.log('err delete guild')
     }
-
 }
+
+exports.createChannel = async (req, res) => {
+    const { nameChannel, type } = req.body
+    const idGuild = req.params.guildId
+    try {
+        const guild = await Guild.findById(idGuild)
+        const channel = await channelService.createChannel(nameChannel,guild.members, type)
+        guild.channels.push(channel._id)
+        guild.save()
+        return res.status(200).json({
+            success: true,
+            message: 'Create channel',
+            guild
+        })
+    } catch (error) {
+        console.log('err create channel')
+    }
+}
+
 exports.addMember = async (req, res) => {
-    const id = req.userId
     const idGuild = req.params.guildId
     const idMember = req.params.memberId
     try {
         const guild = await Guild.findById(idGuild)
         const member = await User.findById(idMember)
-        console.log(guild._id)
+        if (guild.members.includes(member._id)) {
+            return res.status(201).json({
+                success: false,
+                message: 'member already exists',
+            })
+        }
+        await member.guilds.push(guild._id)
         await guild.members.push(member._id)
+
         guild.channels.forEach(async channel => {
-            await channel.members.push(member._id)
+            await channelService.addMember(member._id, channel._id)
         });
+
+        member.save()
+        guild.save()
+        return res.status(200).json({
+            success: true,
+            message: 'add member',
+            member,
+            guild
+        })
     } catch (error) {
-        console.log('err delete guild')
+        console.log('err add member')
     }
 }
