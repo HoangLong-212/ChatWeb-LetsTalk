@@ -7,30 +7,26 @@ const initialState = {
   isLoading: false,
 };
 
-export const userLoginSlice = createSlice({
-  name: "userLogin",
+export const userSlice = createSlice({
+  name: "user",
   initialState,
   reducers: {
-    loginRequest: (state) => {
+    getUserRequest: (state) => {
       state.isLoading = true;
     },
-   loginSuccess: (state, action) => {
+    getUserSuccess: (state, action) => {
       state.data = action.payload.user;
       state.message = action.payload.message;
       state.success = action.payload.success;
       state.isLoading = false;
-      if (action.payload.success) {
-        localStorage.setItem("Auth_token", action.payload.user.token);
-      }
     },
-    loginFailure: (state, action) => {
+    getUserFailure: (state, action) => {
       state.message = action.payload.message;
       state.success = action.payload.success;
     },
   },
 });
-export const userLoginState$ = (state) => state.userLogin;
-export const { loginRequest, loginSuccess, loginFailure } =
-  userLoginSlice.actions;
-export default userLoginSlice.reducer;
-
+export const userState$ = (state) => state.user;
+export const { getUserRequest, getUserSuccess, getUserFailure } =
+  userSlice.actions;
+export default userSlice.reducer;
