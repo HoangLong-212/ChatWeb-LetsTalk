@@ -108,7 +108,7 @@ exports.logIn = async (req, res) => {
 exports.getOne = async (req, res) => {
     const id = req.userId;
     try {
-        const user = await User.findById(id).populate('avatar')
+        const user = await User.findById(id).populate('avatar').populate('guilds').populate('channels')
         return res.status(200).json({
             success: true,
             message: 'get User',
