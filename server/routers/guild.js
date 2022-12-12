@@ -7,6 +7,10 @@ const checkAdmin = require('../middleware/checkAdmin')
 const upload = require('../middleware/upload');
 
 router
+    .route('/:id')
+    .get(guildController.getOneById)
+
+router
     .route('/createGuild')
     .post(auth, upload.single("avatar"), guildController.createGuild)
 
@@ -25,6 +29,5 @@ router
 router
     .route('/:guildId/add/:memberId')
     .get(auth, checkAdmin, guildController.addMember)
-
 
 module.exports = router

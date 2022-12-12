@@ -109,13 +109,41 @@ exports.getOne = async (req, res) => {
     const id = req.userId;
     try {
         const user = await User.findById(id).populate('avatar').populate('guilds').populate('channels')
-        return res.status(200).json({
-            success: true,
-            message: 'get User',
+        if(user){
+            return res.status(200).json({
+                success: true,
+                message: 'get user by token',
+                user
+            })
+        }
+        return res.status(201).json({
+            success: false,
+            message: 'get user by token',
             user
         })
     } catch (error) {
         console.log('err get user')
+    }
+}
+
+exports.getOneById = async (req,res)=>{
+    const id = req.params.id
+    try {
+        const user = await User.findById(id).populate('avatar').populate('guilds').populate('channels')
+        if(user){
+            return res.status(200).json({
+                success: true,
+                message: 'Get one by id',
+                user
+            })
+        }
+        return res.status(201).json({
+            success: false,
+            message: 'Get one by id',
+        })
+
+    } catch (error) {
+        console.log('err get one by id')
     }
 }
 
