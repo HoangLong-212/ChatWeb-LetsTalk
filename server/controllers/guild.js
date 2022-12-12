@@ -6,6 +6,29 @@ const User = require('../models/user')
 const imageService = require('../service/image');
 const channelService = require('../service/channel')
 
+exports.getOneById = async (req, res) => {
+    const id = req.params.id
+    try {
+        const guild = await Guild.findById(id)
+            .populate('avatar','imageUrl')
+            .populate('members',['username','emotion','status','avatar','id_fake'])
+            .populate('channels',['name','type'])
+        if (guild) {
+            return res.status(200).json({
+                success: true,
+                message: 'get one guild by id',
+                guild
+            })
+        }
+        return res.status(201).json({
+            success: false,
+            message: 'get one guild by id',
+        })
+    } catch (error) {
+        console.log("err get one guild by id")
+    }
+}
+
 exports.createGuild = async (req, res) => {
     const id = req.userId
     const { serverName } = req.body
@@ -56,14 +79,29 @@ exports.renameGuild = async (req, res) => {
             guild
         })
     } catch (error) {
-        return res.status(201).json({
-            success: false,
-            message: 'Rename guild err',
+        console.log('err rename guild')
+    }
+}
+exports.createChannel = async (req, res) => {
+    const { nameChannel, type } = req.body
+    const idGuild = req.params.guildId
+    try {
+        const guild = await Guild.findById(idGuild)
+        const channel = await channelService.createChannel(nameChannel, guild.members, type)
+        guild.channels.push(channel._id)
+        guild.save()
+        return res.status(200).json({
+            success: true,
+            message: 'Create channel',
+            guild
         })
+    } catch (error) {
+        console.log('err create channel')
     }
 }
 
-exports.deleteGuild = async (req, res) => {
+exports.deleteGuild = async (req, res) =>{
+    const id = req.userId
     const idGuild = req.params.guildId
     try {
         const guild = await Guild.findById(idGuild)
@@ -77,55 +115,5 @@ exports.deleteGuild = async (req, res) => {
 
     } catch (error) {
         console.log('err delete guild')
-    }
-}
-
-exports.createChannel = async (req, res) => {
-    const { nameChannel, type } = req.body
-    const idGuild = req.params.guildId
-    try {
-        const guild = await Guild.findById(idGuild)
-        const channel = await channelService.createChannel(nameChannel,guild.members, type)
-        guild.channels.push(channel._id)
-        guild.save()
-        return res.status(200).json({
-            success: true,
-            message: 'Create channel',
-            guild
-        })
-    } catch (error) {
-        console.log('err create channel')
-    }
-}
-
-exports.addMember = async (req, res) => {
-    const idGuild = req.params.guildId
-    const idMember = req.params.memberId
-    try {
-        const guild = await Guild.findById(idGuild)
-        const member = await User.findById(idMember)
-        if (guild.members.includes(member._id)) {
-            return res.status(201).json({
-                success: false,
-                message: 'member already exists',
-            })
-        }
-        await member.guilds.push(guild._id)
-        await guild.members.push(member._id)
-
-        guild.channels.forEach(async channel => {
-            await channelService.addMember(member._id, channel._id)
-        });
-
-        member.save()
-        guild.save()
-        return res.status(200).json({
-            success: true,
-            message: 'add member',
-            member,
-            guild
-        })
-    } catch (error) {
-        console.log('err add member')
     }
 }

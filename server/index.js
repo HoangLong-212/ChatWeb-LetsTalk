@@ -23,9 +23,13 @@ app.use(morgan('dev'));
 
 const userRouter = require('./routers/user')
 const guildRouter = require('./routers/guild')
+const imageRouter = require('./routers/image')
+const channelRouter = require('./routers/channel')
 
 app.use('/user', userRouter)
 app.use('/guild', guildRouter)
+app.use('/image', imageRouter)
+app.use('/channel', channelRouter)
 
 mongoose
   .connect(URI, { useNewUrlParser: true, useUnifiedTopology: true })
