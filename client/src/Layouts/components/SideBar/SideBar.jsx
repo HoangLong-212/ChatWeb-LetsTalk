@@ -4,7 +4,7 @@ import styles from "./SideBar.module.scss";
 import Channel from "src/components/Channel/Channel";
 import { RiArrowDownSLine } from "react-icons/ri";
 import { BsFillGearFill, BsHeadphones } from "react-icons/bs";
-import { MdMic, MdMicOff } from "react-icons/md";
+import { MdMic } from "react-icons/md";
 
 const cx = classNames.bind(styles);
 function SideBar({ className }) {

@@ -7,14 +7,14 @@ import { getUserRequest, userState$ } from "src/redux/slice/userSlice";
 
 const cx = classNames.bind(styles);
 function Home() {
-  const dispatch = useDispatch();
-  const user = useSelector(userState$);
+  // const dispatch = useDispatch();
+  // const user = useSelector(userState$);
 
-  useEffect(() => {
-    const token = { authorization: localStorage.getItem("Auth_token") };
-    dispatch(getUserRequest(token));
-  }, [dispatch]);
-  
+  // useEffect(() => {
+  //   const token = { authorization: localStorage.getItem("Auth_token") };
+  //   dispatch(getUserRequest(token));
+  // }, [dispatch]);
+
   return (
     <div className={cx("wrapper")}>
       <Chat />
