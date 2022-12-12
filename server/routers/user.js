@@ -10,6 +10,10 @@ router
     .get(userController.getAll)
 
 router
+    .route('/:id/getOneById')
+    .get(userController.getOneById)
+
+router
     .route('/')
     .get(auth, userController.getOne)
     .post(userController.regiter)

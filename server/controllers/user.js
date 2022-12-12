@@ -108,10 +108,24 @@ exports.logIn = async (req, res) => {
 exports.getOne = async (req, res) => {
     const id = req.userId;
     try {
+<<<<<<< Updated upstream
         const user = await User.findById(id).populate('avatar')
         return res.status(200).json({
             success: true,
             message: 'get User',
+=======
+        const user = await User.findById(id).populate('avatar').populate('guilds').populate('channels')
+        if(user){
+            return res.status(200).json({
+                success: true,
+                message: 'get user by token',
+                user
+            })
+        }
+        return res.status(201).json({
+            success: false,
+            message: 'get user by token',
+>>>>>>> Stashed changes
             user
         })
     } catch (error) {
@@ -119,7 +133,32 @@ exports.getOne = async (req, res) => {
     }
 }
 
+<<<<<<< Updated upstream
 exports.getAllFriend = async (req,res)=>{
+=======
+exports.getOneById = async (req,res)=>{
+    const id = req.params.id
+    try {
+        const user = await User.findById(id).populate('avatar').populate('guilds').populate('channels')
+        if(user){
+            return res.status(200).json({
+                success: true,
+                message: 'Get one by id',
+                user
+            })
+        }
+        return res.status(201).json({
+            success: false,
+            message: 'Get one by id',
+        })
+
+    } catch (error) {
+        console.log('err get one by id')
+    }
+}
+
+exports.getAllFriend = async (req, res) => {
+>>>>>>> Stashed changes
     const id = req.userId
     try {
         const user = await User.findById(id)

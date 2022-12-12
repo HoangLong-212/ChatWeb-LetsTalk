@@ -5,6 +5,29 @@ const User = require('../models/user')
 const imageService = require('../service/image');
 const channelService = require('../service/channel')
 
+exports.getOneById = async (req, res) => {
+    const id = req.params.id
+    try {
+        const guild = await Guild.findById(id)
+            .populate('avatar','imageUrl')
+            .populate('members',['username','emotion','status','avatar','id_fake'])
+            .populate('channels',['name','type'])
+        if (guild) {
+            return res.status(200).json({
+                success: true,
+                message: 'get one guild by id',
+                guild
+            })
+        }
+        return res.status(201).json({
+            success: false,
+            message: 'get one guild by id',
+        })
+    } catch (error) {
+        console.log("err get one guild by id")
+    }
+}
+
 exports.createGuild = async (req, res) => {
     const id = req.userId
     const { serverName } = req.body
@@ -57,6 +80,24 @@ exports.renameGuild = async (req, res) => {
         }
     } catch (error) {
 
+<<<<<<< Updated upstream
+=======
+exports.createChannel = async (req, res) => {
+    const { nameChannel, type } = req.body
+    const idGuild = req.params.guildId
+    try {
+        const guild = await Guild.findById(idGuild)
+        const channel = await channelService.createChannel(nameChannel, guild.members, type)
+        guild.channels.push(channel._id)
+        guild.save()
+        return res.status(200).json({
+            success: true,
+            message: 'Create channel',
+            guild
+        })
+    } catch (error) {
+        console.log('err create channel')
+>>>>>>> Stashed changes
     }
 }
 
