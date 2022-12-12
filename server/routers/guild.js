@@ -26,8 +26,8 @@ router
     .route('/:guildId/delelteGuild')
     .post(auth, checkAdmin, guildController.deleteGuild)
 
-router
-    .route('/:guildId/add/:memberId')
-    .get(auth, checkAdmin, guildController.addMember)
+// router
+//     .route('/:guildId/add/:memberId')
+//     .get(auth, checkAdmin, guildController.addMember)
 
 module.exports = router
