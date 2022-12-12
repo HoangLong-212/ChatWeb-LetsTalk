@@ -79,9 +79,9 @@ exports.renameGuild = async (req, res) => {
             })
         }
     } catch (error) {
-
-<<<<<<< Updated upstream
-=======
+        console.log('err rename guild')
+    }
+}
 exports.createChannel = async (req, res) => {
     const { nameChannel, type } = req.body
     const idGuild = req.params.guildId
@@ -97,11 +97,10 @@ exports.createChannel = async (req, res) => {
         })
     } catch (error) {
         console.log('err create channel')
->>>>>>> Stashed changes
     }
 }
 
-exports.deleteGuild = async (req, res) => {
+exports.deleteGuild = async (req, res) =>{
     const id = req.userId
     const idGuild = req.params.guildId
     try {
@@ -118,5 +117,4 @@ exports.deleteGuild = async (req, res) => {
     } catch (error) {
         console.log('err delete guild')
     }
-
 }

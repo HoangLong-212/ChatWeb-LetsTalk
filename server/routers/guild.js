@@ -14,10 +14,6 @@ router
     .post(auth, upload.single("avatar"), guildController.createGuild)
 
 router
-<<<<<<< Updated upstream
-    .route('/:guildId')
-    .patch(auth, guildController.renameGuild)
-=======
     .route('/:guildId/rename')
     .post(auth, checkAdmin, guildController.renameGuild)
 
@@ -32,6 +28,5 @@ router
 router
     .route('/:guildId/add/:memberId')
     .get(auth, checkAdmin, guildController.addMember)
->>>>>>> Stashed changes
 
 module.exports = router
