@@ -105,7 +105,7 @@ exports.logIn = async (req, res) => {
     })
 }
 
-exports.getOne = async (req, res) => {
+exports.getOnebyToken = async (req, res) => {
     const id = req.userId;
     try {
         const user = await User.findById(id).populate('avatar').populate('guilds').populate('channels')

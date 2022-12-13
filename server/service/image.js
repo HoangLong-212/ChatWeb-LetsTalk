@@ -10,7 +10,6 @@ exports.getAvtGuildDefault = async () => {
     return await Image.findOne({ imageId: '001' })
 }
 
-
 exports.upload = async (path) => {
 
     try {
