@@ -15,7 +15,7 @@ router
 
 router
     .route('/')
-    .get(auth, userController.getOne)
+    .get(auth, userController.getOnebyToken)
     .post(userController.register)
     .delete(userController.deleteAll)
 

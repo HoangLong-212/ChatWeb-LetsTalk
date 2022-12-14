@@ -1,6 +1,6 @@
 var users = []
 const User = require('./models/user')
-const messageController = require('./service/message')
+const messageService = require('./service/message')
 
 const SocketServer = (socket, io) => {
 
@@ -32,7 +32,7 @@ const SocketServer = (socket, io) => {
         //author, timestamp, content, isImage, channel_id
         const sender = await users.find(user => user.socketId == socket.id)
         const user = await User.findById(sender.userId)
-        const mess = await messageController.addMessage(user._id, timestamp, content, isImage, channel_id)
+        const mess = await messageService.addMessage(user._id, timestamp, content, isImage, channel_id)
         console.log(mess)
         io.to(`${channel_id}`).emit('message',({mess}));
     })

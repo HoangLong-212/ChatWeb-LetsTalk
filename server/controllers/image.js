@@ -1,7 +1,7 @@
 const imageService = require('../service/image');
 
 exports.getUrl = async (req, res)=>{
-    const id = req.params.id
+    const id = req.params.imageId
     try {
         const imageUrl = await imageService.getUrl(id)
         if(imageUrl){

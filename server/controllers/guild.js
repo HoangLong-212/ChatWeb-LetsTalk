@@ -1,13 +1,12 @@
 const mongoose = require('mongoose')
 
 const Guild = require('../models/guild')
-const Channel = require('../models/channel')
 const User = require('../models/user')
 const imageService = require('../service/image');
 const channelService = require('../service/channel')
 
 exports.getOneById = async (req, res) => {
-    const id = req.params.id
+    const id = req.params.guildId
     try {
         const guild = await Guild.findById(id)
             .populate('avatar','imageUrl')
@@ -28,6 +27,62 @@ exports.getOneById = async (req, res) => {
         console.log("err get one guild by id")
     }
 }
+
+exports.getChannels = async (req,res)=>{
+    const id = req.params.guildId
+    try {
+        const guild = await Guild.findById(id).populate('channels',['name','type'])
+        const listChannel = guild.channels
+        if (guild) {
+            return res.status(200).json({
+                success: true,
+                message: 'get list channel',
+                listChannel
+            })
+        }
+        return res.status(201).json({
+            success: false,
+            message: 'get list channel',
+        })
+    } catch (error) {
+        console.log("err get list channel")
+    }
+}
+
+exports.getMembers = async (req,res) => {
+    const id = req.params.guildId
+    try {
+        const guild = await Guild.findById(id).populate('members',['username','emotion','status','avatar','id_fake'])
+        if (guild) {
+            var listMember = []
+            
+            for (let index = 0; index < guild.members.length; index++) {
+                const element = guild.members[index]
+                const avtUrl = await imageService.getUrl(element.avatar)
+                listMember.push({
+                    _id: element._id,
+                    username: element.username,
+                    emotion: element.emotion,
+                    status: element.status,
+                    avatarUrl: avtUrl,
+                    id_fake: element.id_fake
+                })
+            }
+            return res.status(200).json({
+                success: true,
+                message: 'get list member',
+                listMember
+            })
+        }
+        return res.status(201).json({
+            success: false,
+            message: 'get list member',
+        })
+    } catch (error) {
+        console.log("err get list member")
+    }
+}
+
 
 exports.createGuild = async (req, res) => {
     const id = req.userId
@@ -115,5 +170,38 @@ exports.deleteGuild = async (req, res) =>{
 
     } catch (error) {
         console.log('err delete guild')
+    }
+}
+
+exports.addMember = async (req, res) => {
+    const idGuild = req.params.guildId
+    const idMember = req.params.memberId
+    try {
+        const guild = await Guild.findById(idGuild)
+        const member = await User.findById(idMember)
+
+        if (guild.members.includes(member._id)) {
+            return res.status(201).json({
+                success: false,
+                message: 'member already exists',
+            })
+        }
+        await member.guilds.push(guild._id)
+        await guild.members.push(member._id)
+
+        guild.channels.forEach(async channel => {
+            await channelService.addMember(member._id, channel._id)
+        });
+
+        member.save()
+        guild.save()
+        return res.status(200).json({
+            success: true,
+            message: 'add member',
+            member,
+            guild
+        })
+    } catch (error) {
+        console.log('err add member')
     }
 }

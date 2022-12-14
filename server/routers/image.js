@@ -4,7 +4,7 @@ const router = express.Router()
 const imageController = require('../controllers/image')
 
 router
-    .route('/:id')
+    .route('/:imageId')
     .get(imageController.getUrl)
 
 

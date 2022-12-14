@@ -7,8 +7,17 @@ const checkAdmin = require('../middleware/checkAdmin')
 const upload = require('../middleware/upload');
 
 router
-    .route('/:id')
+    .route('/:guildId')
     .get(guildController.getOneById)
+
+router
+    .route('/:guildId/getChannels')
+    .get(guildController.getChannels)
+
+router
+    .route('/:guildId/getMembers')
+    .get(guildController.getMembers)
+
 
 router
     .route('/createGuild')
@@ -26,8 +35,8 @@ router
     .route('/:guildId/deleteGuild')
     .post(auth, checkAdmin, guildController.deleteGuild)
 
-// router
-//     .route('/:guildId/add/:memberId')
-//     .get(auth, checkAdmin, guildController.addMember)
+router
+    .route('/:guildId/add/:memberId')
+    .get(auth, checkAdmin, guildController.addMember)
 
 module.exports = router
