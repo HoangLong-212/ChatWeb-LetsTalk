@@ -4,16 +4,93 @@ const jwt = require('jsonwebtoken')
 
 const User = require('../models/user')
 
+const userService = require('../service/user')
 const imageService = require('../service/image');
 const channelService = require('../service/channel')
 
 exports.getAll = async (req, res) => {
-    const data = await User.find().populate('avatar');
+    const data = await User.find().populate('avatar').populate('guilds');
 
     res.status(200).json({
         message: 'get all',
         data
     })
+}
+
+exports.getGuilds = async (req, res) => {
+    const id = req.params.id
+    try {
+        const user = await User.findById(id).populate('guilds')
+
+        if (user) {
+            var listGuild = []
+
+            for (let index = 0; index < user.guilds.length; index++) {
+                const element = user.guilds[index]
+                const avtUrl = await imageService.getUrl(element.avatar)
+                listGuild.push({
+                    _id: element._id,
+                    name: element.name,
+                    author: element.author,
+                    members: element.members,
+                    channels: element.channels,
+                    avatarUrl: avtUrl,
+                })
+            }
+            return res.status(200).json({
+                success: true,
+                message: 'get list guild',
+                listGuild
+            })
+        }
+        return res.status(201).json({
+            success: false,
+            message: 'get list guild',
+        })
+
+
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+exports.getChannelsDM = async (req,res) => {
+    const id = req.params.id
+    try {
+        const user = await User.findById(id).populate('channels')
+        if (user) {
+            var listChannel = []
+
+            for (let index = 0; index < user.channels.length; index++) {
+                const element = user.channels[index]
+                var avt
+                if(element.members[0].toString() == id){
+                    avt = await userService.getAvatar(element.members[1].toString())
+                }else{
+                    avt = await userService.getAvatar(element.members[0].toString())
+                }
+
+                listChannel.push({
+                    _id: element._id,
+                    name: element.name,
+                    members: element.members,
+                    messages: element.messages,
+                    avatarUrl: avt.imageUrl,
+                })
+            }
+            return res.status(200).json({
+                success: true,
+                message: 'get list channels DM',
+                listChannel
+            })
+        }
+        return res.status(201).json({
+            success: false,
+            message: 'get list channels DM',
+        })
+    } catch (error) {
+        console.log(error)
+    }
 }
 
 exports.deleteAll = async () => {
@@ -109,7 +186,7 @@ exports.getOnebyToken = async (req, res) => {
     const id = req.userId;
     try {
         const user = await User.findById(id).populate('avatar').populate('guilds').populate('channels')
-        if(user){
+        if (user) {
             return res.status(200).json({
                 success: true,
                 message: 'get user by token',
@@ -126,11 +203,11 @@ exports.getOnebyToken = async (req, res) => {
     }
 }
 
-exports.getOneById = async (req,res)=>{
+exports.getOneById = async (req, res) => {
     const id = req.params.id
     try {
         const user = await User.findById(id).populate('avatar').populate('guilds').populate('channels')
-        if(user){
+        if (user) {
             return res.status(200).json({
                 success: true,
                 message: 'Get one by id',

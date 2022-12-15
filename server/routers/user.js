@@ -10,6 +10,15 @@ router
     .get(userController.getAll)
 
 router
+    .route('/:id/getGuilds')
+    .get(userController.getGuilds)
+
+router
+    .route('/:id/getChannelsDM')
+    .get(userController.getChannelsDM)
+
+
+router
     .route('/:id/getOneById')
     .get(userController.getOneById)
 
