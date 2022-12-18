@@ -1,0 +1,18 @@
+import * as api from "../../api/index";
+import { takeLatest, call, put } from "redux-saga/effects";
+import { guildsActions } from "../slice/guildsSlice";
+
+function* fetchGuildsSaga(action) {
+  try {
+    // console.log("listGuild");
+    const listGuild = yield call(api.getGuilds, action.payload);
+    // console.log("lasdlasldl", listGuild);
+    yield put(guildsActions.getGuildsSuccess(listGuild.data));
+  } catch (err) {
+    yield put(guildsActions.getGuildsRequest(err));
+  }
+}
+
+export default function* guildsSaga() {
+  yield takeLatest(guildsActions.getGuildsRequest.type, fetchGuildsSaga);
+}

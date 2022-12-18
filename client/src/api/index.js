@@ -9,7 +9,8 @@ export const register = (registerForm) =>
 
 export const getUser = (headers) => axios.get(`${URL}/user`, { headers });
 
-export const getImage = (params) => axios.get(`${URL}/image`, { params });
+export const getGuilds = (userId) =>
+  axios.get(`${URL}/user/${userId}/getGuilds`);
 
 export const getChannelsByGuildId = (guildId) =>
   axios.get(`${URL}/guild/${guildId}/getChannels`);

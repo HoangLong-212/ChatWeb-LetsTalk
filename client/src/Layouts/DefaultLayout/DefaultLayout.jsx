@@ -8,11 +8,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { getUserRequest, userState$ } from "src/redux/slice/userSlice";
 import { channelsState$ } from "src/redux/slice/channelsSlice";
 import { useParams } from "react-router-dom";
+import { guildsState$ } from "src/redux/slice/guildsSlice";
 
 const cx = classNames.bind(styles);
 function DefaultLayout({ children }) {
   const dispatch = useDispatch();
   const user = useSelector(userState$);
+  const guilds = useSelector(guildsState$);
   // const channels = useSelector(channelsState$);
 
   useEffect(() => {
@@ -21,12 +23,12 @@ function DefaultLayout({ children }) {
   }, [dispatch]);
 
   // console.log(user);
-  let { serverId } = useParams();
+  // let { serverId } = useParams();
 
-  console.log("serverId", serverId);
+  // console.log("guilds", guilds);
   return (
     <div className={cx("wrapper")}>
-      <LeftNav className={cx("left-nav")} listData={user?.data?.guilds} />
+      <LeftNav className={cx("left-nav")} listData={guilds?.listGuild} />
       <div className={cx("base")}>
         <SideBar className={cx("sub-sidebar")} data={user?.data} />
         <div className={cx("container")}>

@@ -7,6 +7,7 @@ import Register from "src/pages/Authentication/Register/Register";
 const publishRoutes = [
   { path: "/", component: Home },
   { path: "/:serverId", component: Home },
+  { path: "/:serverId/:channelId", component: Home },
   { path: "/login", component: Login, layout: AuthenticationLayout },
   { path: "/register", component: Register, layout: AuthenticationLayout },
 ];

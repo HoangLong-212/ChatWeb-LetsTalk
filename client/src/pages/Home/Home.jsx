@@ -13,7 +13,7 @@ function Home() {
   // const headerURL = path[0];
   let { serverId } = useParams();
 
-  console.log("headerURL", serverId);
+  // console.log("headerURL", serverId);
   // const dispatch = useDispatch();
   // const user = useSelector(userState$);
 

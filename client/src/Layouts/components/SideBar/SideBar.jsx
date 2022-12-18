@@ -26,14 +26,21 @@ function SideBar({ className, data }) {
   const dataServer = data?.guilds.find((data) => data._id === serverId);
   // console.log("dataServer", dataServer);
 
+  const textChannels = channels?.listChannel.filter(
+    (data) => data.type === "GUILD_DM"
+  );
+
+  const voiceChannels = channels?.listChannel.filter(
+    (data) => data.type === "GUILD_VOICE"
+  );
+
   useEffect(() => {
     if (dataServer) {
-      // console.log("data", dataServer);
       dispatch(getChannelsRequest(dataServer._id));
     }
   }, [dispatch, dataServer]);
 
-  console.log("channles", channels);
+  // console.log("textChannel", textChannels);
   return (
     <div className={classes}>
       <div className={cx("inner")}>
@@ -47,12 +54,12 @@ function SideBar({ className, data }) {
           />
         </div>
         <div className={cx("container")}>
+          <Channel listTextChannels={textChannels} />
+          {/* <Channel />
           <Channel />
           <Channel />
           <Channel />
-          <Channel />
-          <Channel />
-          <Channel />
+          <Channel /> */}
         </div>
       </div>
       <div className={cx("panels")}>
