@@ -32,7 +32,7 @@ router
     .post(auth, checkAdmin, guildController.createChannel)
 
 router
-    .route('/:guildId/delelteGuild')
+    .route('/:guildId/deleteGuild')
     .post(auth, checkAdmin, guildController.deleteGuild)
 
 router
