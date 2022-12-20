@@ -24,6 +24,20 @@ export const guildsSlice = createSlice({
       state.message = action.payload.message;
       state.success = action.payload.success;
     },
+
+    createGuildsRequest: (state) => {
+      state.isLoading = true;
+    },
+    createGuildsSuccess: (state, action) => {
+      state.listGuild = [...state.listGuild, action.payload.newGuild];
+      state.message = action.payload.message;
+      state.success = action.payload.success;
+      state.isLoading = false;
+    },
+    createGuildsFailure: (state, action) => {
+      state.message = action.payload.message;
+      state.success = action.payload.success;
+    },
   },
 });
 export const guildsState$ = (state) => state.guilds;

@@ -13,6 +13,21 @@ function* fetchGuildsSaga(action) {
   }
 }
 
+function* fetchCreateGuildsSaga(action) {
+  try {
+    // console.log("listGuild");
+    const newGuild = yield call(api.createGuild, action.payload);
+    // console.log("lasdlasldl", listGuild);
+    yield put(guildsActions.getGuildsSuccess(newGuild.data));
+  } catch (err) {
+    yield put(guildsActions.getGuildsRequest(err));
+  }
+}
+
 export default function* guildsSaga() {
   yield takeLatest(guildsActions.getGuildsRequest.type, fetchGuildsSaga);
+  yield takeLatest(
+    guildsActions.createGuildsRequest.type,
+    fetchCreateGuildsSaga
+  );
 }

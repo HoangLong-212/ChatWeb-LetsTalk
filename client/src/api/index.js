@@ -14,3 +14,6 @@ export const getGuilds = (userId) =>
 
 export const getChannelsByGuildId = (guildId) =>
   axios.get(`${URL}/guild/${guildId}/getChannels`);
+
+export const createGuild = (formData) =>
+  axios.get(`${URL}/guild/createGuild`, { formData });
