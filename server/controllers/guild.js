@@ -90,23 +90,32 @@ exports.createGuild = async (req, res) => {
     //create 2 channel default 'GUILD_VOICE' and 'GROUP_DM' push to 'channels'
     try {
         const user = await User.findById(id)
-        const newGuild = new Guild({
+        const nGuild = new Guild({
             _id: new mongoose.Types.ObjectId(),
             name: serverName,
             author: user._id,
         })
-        await newGuild.channels.push(await channelService.createChannelDefault(user._id, 'GUILD_DM'))
-        await newGuild.channels.push(await channelService.createChannelDefault(user._id, 'GUILD_VOICE'))
+        await nGuild.channels.push(await channelService.createChannelDefault(user._id, 'GUILD_DM'))
+        await nGuild.channels.push(await channelService.createChannelDefault(user._id, 'GUILD_VOICE'))
         if (req.file != undefined) {
             const image = await imageService.upload(req.file.path)
-            newGuild.avatar = image
+            nGuild.avatar = image
         } else {
-            newGuild.avatar = await imageService.getAvtGuildDefault()
+            nGuild.avatar = await imageService.getAvtGuildDefault()
         }
-        await newGuild.members.push(user._id)
-        await newGuild.save()
-        await user.guilds.push(newGuild._id)
+        await nGuild.members.push(user._id)
+        await nGuild.save()
+        await user.guilds.push(nGuild._id)
         await user.save()
+        const avtUrl = await imageService.getUrl(nGuild.avatar)
+        const newGuild = {
+            _id: nGuild._id,
+            name: nGuild.name,
+            author: nGuild.author,
+            members: nGuild.members,
+            channels: nGuild.channels,
+            avatarUrl: avtUrl,
+        }
         return res.status(200).json({
             success: true,
             message: 'create guild',
@@ -145,10 +154,15 @@ exports.createChannel = async (req, res) => {
         const channel = await channelService.createChannel(nameChannel, guild.members, type)
         guild.channels.push(channel._id)
         guild.save()
+        const newChannel = {
+            _id: channel._id,
+            name: channel.name,
+            type: channel.type
+        }
         return res.status(200).json({
             success: true,
             message: 'Create channel',
-            guild
+            newChannel
         })
     } catch (error) {
         console.log('err create channel')
