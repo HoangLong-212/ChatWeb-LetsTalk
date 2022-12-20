@@ -1,6 +1,7 @@
 var users = []
 const User = require('./models/user')
 const messageService = require('./service/message')
+const userService = require('./service/user')
 
 const SocketServer = (socket, io) => {
 
@@ -15,6 +16,7 @@ const SocketServer = (socket, io) => {
             console.log('Users: ')
             console.log(users)
         }
+        await userService.setStatus(user.userId, "Online")
         const userData = await User.findById(id).populate('guilds').populate('channels')
         userData.channels.forEach(channel => {
             socket.join(channel._id.toString())
@@ -44,6 +46,7 @@ const SocketServer = (socket, io) => {
         if (!user) {
             return;
         }
+        await userService.setStatus(user.userId, "Invisible")
         users.splice(users.indexOf(client), 1);
         console.log(users)
         console.log('logout socket')

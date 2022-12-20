@@ -170,7 +170,7 @@ exports.logIn = async (req, res) => {
             message: 'Incorrect phoneNumber or password'
         })
 
-    const token = jwt.sign({ userId: user._id }, process.env.JWT_KEY, { expiresIn: '1d' })
+    const token = jwt.sign({ userId: user._id }, process.env.JWT_KEY, { expiresIn: '30d' })
 
     user.token = token
     await user.save()
@@ -326,11 +326,12 @@ exports.getPendingFriend = async (req, res) => {
 
 exports.addFriend = async (req, res) => {
     const userId = req.userId
-    const { friendId } = req.body
+    const { id_fake } = req.body
 
     try {
         const user = await User.findById(userId)
-        const friend = await User.findById(friendId)
+        const friend = await User.findOne({id_fake: id_fake})
+        const friendId = friend._id.toString()
 
         if (user.friendIds.includes(friendId)) {
             return res.status(201).json({

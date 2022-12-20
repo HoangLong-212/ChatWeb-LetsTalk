@@ -3,7 +3,7 @@ const router = express.Router()
 
 const userController = require('../controllers/user')
 const auth = require('../middleware/auth')
-//const upload = require('../middleware/upload');
+const upload = require('../middleware/upload');
 
 router
     .route('/getAll')
@@ -17,7 +17,6 @@ router
     .route('/:id/getChannelsDM')
     .get(userController.getChannelsDM)
 
-
 router
     .route('/:id/getOneById')
     .get(userController.getOneById)
@@ -27,6 +26,10 @@ router
     .get(auth, userController.getOnebyToken)
     .post(userController.register)
     .delete(userController.deleteAll)
+    
+router
+    .route('/upAvatar')
+    .post(auth, upload.single("avatar"), userController.upAvatar)
 
 router
     .route('/login')

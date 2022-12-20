@@ -16,3 +16,15 @@ exports.getAvatar = async (id) => {
         console.log('err get avatar')
     }
 }
+
+exports.setStatus = async (id, status) => {
+    try {
+        const user = await User.findById(id)
+        if(user){
+            user.status = status
+            await user.save()
+        }
+    } catch (error) {
+        console.log('err set status')
+    }
+}
