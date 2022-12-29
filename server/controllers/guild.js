@@ -189,11 +189,10 @@ exports.deleteGuild = async (req, res) =>{
 
 exports.addMember = async (req, res) => {
     const idGuild = req.params.guildId
-    const idMember = req.params.memberId
+    const {id_fake} = req.body
     try {
         const guild = await Guild.findById(idGuild)
-        const member = await User.findById(idMember)
-
+        const member = await User.findOne({id_fake:id_fake})
         if (guild.members.includes(member._id)) {
             return res.status(201).json({
                 success: false,

@@ -2,7 +2,16 @@ const mongoose = require('mongoose')
 
 const User = require('../models/user')
 
-exports.getOne
+exports.getOne = async (id) =>{
+    try {
+        const user = await User.findById(id)
+        if(user){
+            return user
+        }
+    } catch (error) {
+        console.log('err get one user')
+    }
+}
 
 exports.getAvatar = async (id) => {
     try {
