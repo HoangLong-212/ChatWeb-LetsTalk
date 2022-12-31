@@ -1,7 +1,7 @@
 const Channel = require('../models/channel')
 
 const imageService = require('../service/image')
-const userServicer = require('../service/user')
+const userService = require('../service/user')
 
 exports.getOneById = async (req, res) => {
     const id = req.params.channelId
@@ -67,10 +67,13 @@ exports.getMessages = async (req, res) => {
 
             for (let index = 0; index < channel.messages.length; index++) {
                 const element = channel.messages[index]
-                const avtAuthor = await userServicer.getAvatar(element.author)
+                const avtAuthor = await userService.getAvatar(element.author)
+                const author = await userService.getOne(element.author)
                 listMessage.push({
                     _id: element._id,
-                    author: element.author,
+                    authorId: author._id,
+                    authorName: author.username,
+                    authorFakeId: author.id_fake,
                     avatarUrlAuthor: avtAuthor.imageUrl,
                     timestamp: element.timestamp,
                     content: element.content,

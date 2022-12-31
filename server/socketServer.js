@@ -46,7 +46,27 @@ const SocketServer = (socket, io) => {
     io.to(`${channel_id}`).emit("message", { mess });
   });
 
-  ////////////-- disconnect --//////////////
+    socket.on('message', async (data) => {
+        console.log(data)
+        const {timestamp, content, isImage, channel_id} = data
+        //author, timestamp, content, isImage, channel_id
+        const sender = await users.find(user => user.socketId == socket.id)
+        const user = await User.findById(sender.userId).populate('')
+        const avtAuthor = await userService.getAvatar(user._id)
+        const mess = await messageService.addMessage(user._id, timestamp, content, isImage, channel_id)
+        var data = {
+            _id: mess._id,
+            authorId: user._id,
+            authorName: user.username,
+            authorFakeId: user.id_fake,
+            avatarUrlAuthor: avtAuthor.imageUrl,
+            timestamp: mess.timestamp,
+            content: mess.content,
+            isImage: mess.isImage
+        }
+        console.log(data)
+        io.to(`${channel_id}`).emit('message',({data}));
+    })
 
   socket.on("logout", async () => {
     const user = await users.find((user) => user.socketId == socket.id);

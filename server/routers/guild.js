@@ -36,7 +36,7 @@ router
     .post(auth, checkAdmin, guildController.deleteGuild)
 
 router
-    .route('/:guildId/add/:memberId')
+    .route('/:guildId/addMember')
     .get(auth, checkAdmin, guildController.addMember)
 
 module.exports = router
