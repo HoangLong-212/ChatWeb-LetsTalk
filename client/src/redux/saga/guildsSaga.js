@@ -17,10 +17,10 @@ function* fetchCreateGuildsSaga(action) {
   try {
     // console.log("listGuild");
     const newGuild = yield call(api.createGuild, action.payload);
-    // console.log("lasdlasldl", listGuild);
-    yield put(guildsActions.getGuildsSuccess(newGuild.data));
+    console.log("newGuild", newGuild);
+    yield put(guildsActions.createGuildsSuccess(newGuild.data));
   } catch (err) {
-    yield put(guildsActions.getGuildsRequest(err));
+    yield put(guildsActions.createGuildsFailure(err));
   }
 }
 

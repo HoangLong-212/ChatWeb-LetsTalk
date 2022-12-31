@@ -1,16 +1,17 @@
 import React from "react";
 import classNames from "classnames/bind";
-import styles from "./HeaderContent.module.scss";
+import styles from "./HeaderDM.module.scss";
 import { TbHash } from "react-icons/tb";
-import { IoNotifications } from "react-icons/io5";
-import { RiPushpinFill } from "react-icons/ri";
+import { MdPhoneInTalk } from "react-icons/md";
+import { IoVideocam } from "react-icons/io5";
 import { HiUsers, HiInbox, HiQuestionMarkCircle } from "react-icons/hi";
+import { AiOutlineWechat } from "react-icons/ai";
 
 const cx = classNames.bind(styles);
-function HeaderContent({ className }) {
+function HeaderDM({ className }) {
   const icons = [
-    IoNotifications,
-    RiPushpinFill,
+    MdPhoneInTalk,
+    IoVideocam,
     HiUsers,
     HiInbox,
     HiQuestionMarkCircle,
@@ -22,7 +23,9 @@ function HeaderContent({ className }) {
   return (
     <div className={classes}>
       <div className={cx("title")}>
-        <TbHash style={{ fontSize: 24, margin: "0 8px", opacity: 0.4 }} />
+        <AiOutlineWechat
+          style={{ fontSize: 32, margin: "0 8px", opacity: 0.4 }}
+        />
         <div className={cx("text")}>title</div>
       </div>
       <div className={cx("toolbar")}>
@@ -34,4 +37,4 @@ function HeaderContent({ className }) {
   );
 }
 
-export default HeaderContent;
+export default HeaderDM;

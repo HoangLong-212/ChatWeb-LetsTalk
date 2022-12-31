@@ -5,7 +5,7 @@ import Register from "src/pages/Authentication/Register/Register";
 
 //Public Routes
 const publishRoutes = [
-  { path: "/", component: Home },
+  { path: "/@me", component: Home },
   { path: "/:serverId", component: Home },
   { path: "/:serverId/:channelId", component: Home },
   { path: "/login", component: Login, layout: AuthenticationLayout },

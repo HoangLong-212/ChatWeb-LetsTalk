@@ -11,19 +11,21 @@ import {
   getChannelsRequest,
 } from "src/redux/slice/channelsSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { guildsState$ } from "src/redux/slice/guildsSlice";
+import SideBarHomeItem from "src/components/SideBarHomeItem/SideBarHomeItem";
 
 const cx = classNames.bind(styles);
-function SideBar({ className, data }) {
+function SideBar({ className }) {
   const classes = cx("wrapper", {
     [className]: className,
   });
 
   const dispatch = useDispatch();
   const channels = useSelector(channelsState$);
-
+  const guilds = useSelector(guildsState$);
   let { serverId } = useParams();
-  console.log("asdasdas", data);
-  const dataServer = data?.guilds.find((data) => data._id === serverId);
+  // console.log("guilds", guilds);
+  const dataServer = guilds?.listGuild.find((data) => data._id === serverId);
   // console.log("dataServer", dataServer);
 
   const textChannels = channels?.listChannel.filter(
@@ -42,49 +44,36 @@ function SideBar({ className, data }) {
 
   // console.log("textChannel", textChannels);
   return (
-    <div className={classes}>
-      <div className={cx("inner")}>
-        <div className={cx("header-Sidebar")}>
-          <p>{dataServer?.name}</p>
-          <RiArrowDownSLine
-            style={{
-              fontSize: 22,
-              color: "#d5d6d7",
-            }}
-          />
-        </div>
-        <div className={cx("container")}>
-          <Channel listTextChannels={textChannels} />
-          {/* <Channel />
-          <Channel />
-          <Channel />
-          <Channel />
-          <Channel /> */}
-        </div>
+    <div className={cx("inner")}>
+      <div className={cx("header-Sidebar")}>
+        <p>{dataServer?.name}</p>
+        <RiArrowDownSLine
+          style={{
+            fontSize: 22,
+            color: "#d5d6d7",
+          }}
+        />
       </div>
-      <div className={cx("panels")}>
-        <div className={cx("inner-panels")}>
-          <div className={cx("avatar-wrapper")}>
-            <div className={cx("avatar")}>
-              <img src={data?.avatar.imageUrl} alt="" />
-            </div>
-            <div className={cx("name-tag")}>
-              <div className={cx("username")}>{data?.username}</div>
-              <div className={cx("sub-text")}>#{data?.id_fake}</div>
-            </div>
+      <div className={cx("container")}>
+        {/* <div aria-hidden="true" style={{ height: "8px" }}></div>
+          <SideBarHomeItem />
+          <div className={cx("DM")}>
+            <span>DIRECT MESSSAGES</span>
           </div>
-          <div className={cx("avatar-settings")}>
-            <div className={cx("icon-settings")}>
-              <MdMic className={cx("icon")} />
-            </div>
-            <div className={cx("icon-settings")}>
-              <BsHeadphones className={cx("icon")} />
-            </div>
-            <div className={cx("icon-settings")}>
-              <BsFillGearFill className={cx("icon")} style={{ fontSize: 17 }} />
-            </div>
-          </div>
-        </div>
+          <SideBarHomeItem avatar />
+          <SideBarHomeItem avatar />
+          <SideBarHomeItem avatar /> <SideBarHomeItem avatar />
+          <SideBarHomeItem avatar />
+          <SideBarHomeItem avatar /> <SideBarHomeItem avatar />
+          <SideBarHomeItem avatar />
+          <SideBarHomeItem avatar /> <SideBarHomeItem avatar />
+          <SideBarHomeItem avatar />
+          <SideBarHomeItem avatar /> <SideBarHomeItem avatar />
+          <SideBarHomeItem avatar />
+          <SideBarHomeItem avatar /> <SideBarHomeItem avatar />
+          <SideBarHomeItem avatar />
+          <SideBarHomeItem avatar />   */}
+        <Channel listTextChannels={textChannels} />
       </div>
     </div>
   );

@@ -19,6 +19,7 @@ function ChannelItem({ className, dataChannel, channelId }) {
   });
 
   // console.log(match.pathname);
+  // console.log("channelId", channelId);
   return (
     <div className={classes}>
       <div

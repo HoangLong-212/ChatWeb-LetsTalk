@@ -1,0 +1,94 @@
+li {
+  display: list-item;
+  text-align: -webkit-match-parent;
+  list-style: none;
+}
+
+.messageListItem {
+  position: relative;
+}
+
+.mrTop {
+  margin-top: 1.7rem;
+}
+
+.wrapper {
+  min-height: 2.4rem;
+  padding-left: 72px;
+  padding-top: 0.2rem;
+  padding-bottom: 0.2rem;
+  padding-right: 48px !important;
+  position: relative;
+  word-wrap: break-word;
+  user-select: text;
+}
+
+.content {
+  position: static;
+  margin-left: 0;
+  padding-left: 0;
+  text-indent: 0;
+}
+
+.avatar {
+  width: 40px !important;
+  height: 40px !important;
+  position: absolute;
+  left: 16px;
+  margin-top: calc(4px - 0.2rem);
+  overflow: hidden;
+  cursor: pointer;
+  user-select: none;
+  flex: 0 0 auto;
+  z-index: 1;
+}
+
+.header {
+  overflow: hidden;
+  display: block;
+  position: relative;
+  line-height: 2.2rem;
+  min-height: 2.2rem;
+  white-space: break-spaces;
+  margin-bottom: 0 !important;
+}
+
+.headerText {
+  margin-right: 0.4rem;
+}
+
+.username {
+  font-size: 1.6rem;
+  font-weight: 500;
+  line-height: 2.2rem;
+  color: var(--white);
+  display: inline;
+  vertical-align: baseline;
+  position: relative;
+  overflow: hidden;
+}
+
+.timestamp {
+  font-size: 1.2rem;
+  line-height: 2.2rem;
+  color: var(--text-channel);
+  vertical-align: baseline;
+  margin-left: 0.4rem;
+  display: inline-block;
+  height: 2rem;
+  cursor: default;
+  pointer-events: none;
+  font-weight: 500;
+  white-space: break-spaces;
+}
+
+.message {
+  user-select: text;
+  margin-left: -72px;
+  padding-left: 72px;
+  overflow: hidden;
+  white-space: break-spaces;
+  word-wrap: break-word;
+  font-size: 1.6rem;
+  line-height: 2.2rem;
+}

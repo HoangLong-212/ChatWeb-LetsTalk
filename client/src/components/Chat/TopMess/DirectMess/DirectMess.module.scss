@@ -1,0 +1,31 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  margin: 16px;
+}
+
+.avatar {
+  width: 80px !important;
+  height: 80px !important;
+}
+
+.welcome {
+  color: var(--white);
+  margin: 8px 0;
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 40px;
+}
+
+.text {
+  color: var(--greyple);
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 400;
+}
+
+.btn {
+  margin-top: 16px;
+  display: flex;
+}

@@ -7,21 +7,6 @@ import { useParams } from "react-router-dom";
 
 const cx = classNames.bind(styles);
 function Home() {
-  // const url = window.location.pathname;
-  // const path = url.split("/").filter((x) => x);
-
-  // const headerURL = path[0];
-  let { serverId } = useParams();
-
-  // console.log("headerURL", serverId);
-  // const dispatch = useDispatch();
-  // const user = useSelector(userState$);
-
-  // useEffect(() => {
-  //   const token = { authorization: localStorage.getItem("Auth_token") };
-  //   dispatch(getUserRequest(token));
-  // }, [dispatch]);
-
   return (
     <div className={cx("wrapper")}>
       <Chat />

@@ -3,12 +3,19 @@ import classNames from "classnames/bind";
 import styles from "./Channel.module.scss";
 import { RiArrowDownSLine, RiAddLine } from "react-icons/ri";
 import ChannelItem from "./ChannelItem/ChannelItem";
+import { useDispatch } from "react-redux";
+import { createTextChannelModalActions } from "src/redux/slice/createTextChannelModalSlice";
+import CreateTextChannelModal from "../Modal/CreateTextChannelModal/CreateTextChannelModal";
 
 const cx = classNames.bind(styles);
 function Channel({ className, listTextChannels }) {
   const classes = cx("wrapper", {
     [className]: className,
   });
+  const dispatch = useDispatch();
+  const openTextChannelModal = () => {
+    dispatch(createTextChannelModalActions.showModal());
+  };
   return (
     <div className={classes}>
       <div className={cx("inner")}>
@@ -19,6 +26,7 @@ function Channel({ className, listTextChannels }) {
         <RiAddLine
           className={cx("icons-add-channel-item")}
           style={{ fontSize: 20 }}
+          onClick={openTextChannelModal}
         />
       </div>
       {listTextChannels?.map((textChannel) => (
@@ -30,6 +38,7 @@ function Channel({ className, listTextChannels }) {
       ))}
       {/* <ChannelItem />
       <ChannelItem /> */}
+      <CreateTextChannelModal />
     </div>
   );
 }

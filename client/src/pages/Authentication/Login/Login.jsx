@@ -20,7 +20,7 @@ function Login() {
   useEffect(() => {
     if (authLogin.success) {
       console.log(authLogin.message);
-      navigate("/");
+      navigate("/@me");
     } else {
       console.log(authLogin.message);
     }

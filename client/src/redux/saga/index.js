@@ -4,6 +4,7 @@ import loginSaga from "./loginSaga";
 import registerSaga from "./registerSaga";
 import userSaga from "./userSaga";
 import guildsSaga from "./guildsSaga";
+import channelDataSaga from "./channelDataSaga";
 
 function* mySaga() {
   yield all([
@@ -12,6 +13,7 @@ function* mySaga() {
     userSaga(),
     channelsSaga(),
     guildsSaga(),
+    channelDataSaga(),
   ]);
 }
 

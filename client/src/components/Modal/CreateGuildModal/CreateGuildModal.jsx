@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import classNames from "classnames/bind";
 import styles from "./CreateGuildModal.module.scss";
-import { Avatar, Form, Modal } from "antd";
+import { Avatar, Form, Modal, Input } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { createGuildModalState$ } from "src/redux/slice/createGuildModalSlice";
 import { createGuildModalActions } from "src/redux/slice/createGuildModalSlice";
-import Input from "antd/lib/input/Input";
+import { guildsActions } from "src/redux/slice/guildsSlice";
 
 const cx = classNames.bind(styles);
 function CreateGuildModal({ className }) {
@@ -15,7 +15,9 @@ function CreateGuildModal({ className }) {
   const dispatch = useDispatch();
   const { isShow } = useSelector(createGuildModalState$);
   let formData = new FormData();
+  const token = localStorage.getItem("Auth_token");
   const [serverForm, setServerForm] = useState({
+    file: "",
     avatar: "",
     name: "",
   });
@@ -23,17 +25,23 @@ function CreateGuildModal({ className }) {
   const handlePreviewAvatar = (e) => {
     const file = e.target.files[0];
     if (file) {
-      formData.append("avatar", file);
       file.preview = URL.createObjectURL(file);
-      setServerForm({ ...serverForm, avatar: file.preview });
+      setServerForm({ ...serverForm, file: file, avatar: file.preview });
     }
   };
 
   const handleOk = () => {
+    formData.append("avatar", serverForm.file);
     formData.append("serverName", serverForm.name);
+    for (const value of formData.values()) {
+      console.log(value);
+    }
+    dispatch(guildsActions.createGuildsRequest({ formData, token }));
+    handleCancel();
   };
 
   const handleCancel = () => {
+    setServerForm({ ...serverForm, file: "", avatar: "", name: "" });
     dispatch(createGuildModalActions.hideModal());
   };
 
@@ -65,6 +73,12 @@ function CreateGuildModal({ className }) {
         onFinish={{}}
         onFinishFailed={{}}
         autoComplete="off"
+        fields={[
+          {
+            name: ["server"],
+            value: serverForm.name,
+          },
+        ]}
       >
         <Form.Item
           label="Server name"

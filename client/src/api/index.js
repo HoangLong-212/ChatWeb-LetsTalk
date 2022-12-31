@@ -15,5 +15,19 @@ export const getGuilds = (userId) =>
 export const getChannelsByGuildId = (guildId) =>
   axios.get(`${URL}/guild/${guildId}/getChannels`);
 
-export const createGuild = (formData) =>
-  axios.get(`${URL}/guild/createGuild`, { formData });
+export const createGuild = (data) =>
+  axios({
+    method: "post",
+    url: `${URL}/guild/createGuild`,
+    data: data.formData,
+    headers: {
+      "Content-Type": "multipart/form-data",
+      authorization: data.token,
+    },
+  });
+
+export const getOneChannelById = (channelId) =>
+  axios.get(`${URL}/channel/${channelId}`);
+
+export const getMessage = (channelId) =>
+  axios.get(`${URL}/channel/${channelId}/getMessages`);

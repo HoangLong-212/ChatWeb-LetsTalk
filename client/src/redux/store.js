@@ -7,6 +7,8 @@ import userSlice from "./slice/userSlice";
 import channelsSlice from "./slice/channelsSlice";
 import guildsSlice from "./slice/guildsSlice";
 import createGuildModalSlice from "./slice/createGuildModalSlice";
+import channelDataSlice from "./slice/channelDataSlice";
+import createTextChannelModalSlice from "./slice/createTextChannelModalSlice";
 
 const sagaMiddleware = createSagaMiddleware();
 const store = configureStore({
@@ -17,6 +19,8 @@ const store = configureStore({
     channels: channelsSlice,
     guilds: guildsSlice,
     createGuildModal: createGuildModalSlice,
+    createTextChannelModal: createTextChannelModalSlice,
+    channelData: channelDataSlice,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

@@ -32,7 +32,7 @@ function LeftNav({ className, listData }) {
             style={{ width: 28, height: 20 }}
           />
         }
-        onClick={() => navigate("/")}
+        onClick={() => navigate("/@me")}
       />
       <div className={cx("strikeThrough")} />
       <div className={cx("Servers")}>

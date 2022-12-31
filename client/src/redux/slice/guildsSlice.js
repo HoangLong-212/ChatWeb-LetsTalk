@@ -29,7 +29,10 @@ export const guildsSlice = createSlice({
       state.isLoading = true;
     },
     createGuildsSuccess: (state, action) => {
+      console.log("action.payload", action.payload);
       state.listGuild = [...state.listGuild, action.payload.newGuild];
+      console.log("state.listGuild", state.listGuild);
+
       state.message = action.payload.message;
       state.success = action.payload.success;
       state.isLoading = false;
