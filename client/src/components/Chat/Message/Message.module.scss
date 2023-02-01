@@ -33,10 +33,9 @@ li {
 .avatar {
   width: 40px !important;
   height: 40px !important;
-  position: absolute;
+  position: absolute !important;
   left: 16px;
   margin-top: calc(4px - 0.2rem);
-  overflow: hidden;
   cursor: pointer;
   user-select: none;
   flex: 0 0 auto;
@@ -91,4 +90,57 @@ li {
   word-wrap: break-word;
   font-size: 1.6rem;
   line-height: 2.2rem;
+}
+
+.imgMessage {
+  display: grid;
+  grid-auto-flow: row;
+  grid-row-gap: 0.4rem;
+  grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
+  text-indent: 0;
+  min-height: 0;
+  min-width: 0;
+  padding-top: 0.2rem;
+  padding-bottom: 0.2rem;
+  position: relative;
+}
+
+.messageAttachment {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: start;
+  max-width: 100%;
+  height: 100%;
+}
+
+.imageContent {
+  display: flex;
+  flex-flow: column nowrap;
+  flex: auto;
+}
+
+.imageContainer {
+  flex-flow: row nowrap;
+  flex: auto;
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+
+.imageWrapper {
+  display: block;
+  position: relative;
+  overflow: hidden;
+  border-radius: 3px;
+  max-width: 224px;
+  width: 100%;
+  aspect-ratio: 224 / 224;
+
+  img {
+    max-width: 224px;
+    max-height: 224px;
+    width: 100%;
+    display: block;
+    aspect-ratio: 224 / 224;
+  }
 }

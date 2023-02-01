@@ -6,13 +6,12 @@ import { RiArrowDownSLine } from "react-icons/ri";
 import { BsFillGearFill, BsHeadphones } from "react-icons/bs";
 import { MdMic } from "react-icons/md";
 import { useParams } from "react-router-dom";
-import {
-  channelsState$,
-  getChannelsRequest,
-} from "src/redux/slice/channelsSlice";
+import { channelActions, channelsState$ } from "src/redux/slice/channelsSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { guildsState$ } from "src/redux/slice/guildsSlice";
 import SideBarHomeItem from "src/components/SideBarHomeItem/SideBarHomeItem";
+import { InviteMemberModalActions } from "src/redux/slice/InviteMemberModal";
+import InviteMemberModal from "src/components/Modal/InviteMemberModal/InviteMemberModal";
 
 const cx = classNames.bind(styles);
 function SideBar({ className }) {
@@ -38,14 +37,18 @@ function SideBar({ className }) {
 
   useEffect(() => {
     if (dataServer) {
-      dispatch(getChannelsRequest(dataServer._id));
+      dispatch(channelActions.getChannelsRequest(dataServer._id));
     }
   }, [dispatch, dataServer]);
 
+  const openInviteMemberModal = () => {
+    console.log("asdasda");
+    dispatch(InviteMemberModalActions.showModal());
+  };
   // console.log("textChannel", textChannels);
   return (
     <div className={cx("inner")}>
-      <div className={cx("header-Sidebar")}>
+      <div className={cx("header-Sidebar")} onClick={openInviteMemberModal}>
         <p>{dataServer?.name}</p>
         <RiArrowDownSLine
           style={{
@@ -55,26 +58,9 @@ function SideBar({ className }) {
         />
       </div>
       <div className={cx("container")}>
-        {/* <div aria-hidden="true" style={{ height: "8px" }}></div>
-          <SideBarHomeItem />
-          <div className={cx("DM")}>
-            <span>DIRECT MESSSAGES</span>
-          </div>
-          <SideBarHomeItem avatar />
-          <SideBarHomeItem avatar />
-          <SideBarHomeItem avatar /> <SideBarHomeItem avatar />
-          <SideBarHomeItem avatar />
-          <SideBarHomeItem avatar /> <SideBarHomeItem avatar />
-          <SideBarHomeItem avatar />
-          <SideBarHomeItem avatar /> <SideBarHomeItem avatar />
-          <SideBarHomeItem avatar />
-          <SideBarHomeItem avatar /> <SideBarHomeItem avatar />
-          <SideBarHomeItem avatar />
-          <SideBarHomeItem avatar /> <SideBarHomeItem avatar />
-          <SideBarHomeItem avatar />
-          <SideBarHomeItem avatar />   */}
         <Channel listTextChannels={textChannels} />
       </div>
+      <InviteMemberModal />
     </div>
   );
 }

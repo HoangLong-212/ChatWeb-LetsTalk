@@ -6,12 +6,14 @@ import {
   getUserFailure,
 } from "../slice/userSlice";
 import { guildsActions } from "../slice/guildsSlice";
+import { socket } from "src/constants/socket";
 
 function* fetchUserSaga(action) {
   try {
     const user = yield call(api.getUser, action.payload);
     yield put(getUserSuccess(user.data));
     yield put(guildsActions.getGuildsRequest(user.data.user._id));
+    // socket.emit("signin", user.data.user._id);
   } catch (err) {
     yield put(getUserFailure(err));
   }

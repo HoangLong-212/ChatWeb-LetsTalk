@@ -31,3 +31,41 @@ export const getOneChannelById = (channelId) =>
 
 export const getMessage = (channelId) =>
   axios.get(`${URL}/channel/${channelId}/getMessages`);
+
+// export const createChannel = (guildId) =>
+//   axios.post(`${URL}/${guildId}/createGuild`);
+
+export const createChannel = (data) => {
+  return axios({
+    method: "post",
+    url: `${URL}/guild/${data.guildId}/createChannel`,
+    data: { nameChannel: data.nameChannel, type: "GUILD_DM" },
+    headers: {
+      authorization: data.token,
+    },
+  });
+};
+
+export const uploadImage = (data) => {
+  // console.log("api", data);
+  return axios({
+    method: "post",
+    url: `${URL}/image/upImage`,
+    data: data.formData,
+    headers: {
+      authorization: data.token,
+    },
+  });
+};
+
+export const addMemberServer = (data) => {
+  // console.log("addMemberServer", data);
+  return axios({
+    method: "post",
+    url: `${URL}/guild/${data.guildId}/addMember`,
+    data: { id_fake: data.id_fake },
+    headers: {
+      authorization: data.token,
+    },
+  });
+};

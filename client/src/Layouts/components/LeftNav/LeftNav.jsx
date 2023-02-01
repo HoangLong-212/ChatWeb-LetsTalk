@@ -40,7 +40,7 @@ function LeftNav({ className, listData }) {
           <IconLeftNav
             key={data._id}
             img={data.avatarUrl}
-            guildId={`/${data._id}`} // "/ajhdskajshdkajsh"
+            guildId={`/${data._id}/${data.channels[0]}`} // "/ajhdskajshdkajsh"
           />
         ))}
       </div>

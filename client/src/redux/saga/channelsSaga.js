@@ -1,20 +1,31 @@
 import * as api from "../../api/index";
 import { takeLatest, call, put } from "redux-saga/effects";
-import {
-  getChannelsFailure,
-  getChannelsRequest,
-  getChannelsSuccess,
-} from "../slice/channelsSlice";
+import { channelActions } from "../slice/channelsSlice";
 
 function* fetchChannelsSaga(action) {
   try {
     const channels = yield call(api.getChannelsByGuildId, action.payload);
-    yield put(getChannelsSuccess(channels.data));
+    yield put(channelActions.getChannelsSuccess(channels.data));
   } catch (err) {
-    yield put(getChannelsFailure(err));
+    yield put(channelActions.getChannelsFailure(err));
+  }
+}
+
+function* fetchCreateChanelSaga(action) {
+  try {
+    // console.log("listGuild");
+    const newChannel = yield call(api.createChannel, action.payload);
+    console.log("newchannel", newChannel);
+    yield put(channelActions.createChannelsSuccess(newChannel.data));
+  } catch (err) {
+    yield put(channelActions.createChannelsFailure(err));
   }
 }
 
 export default function* channelsSaga() {
-  yield takeLatest(getChannelsRequest.type, fetchChannelsSaga);
+  yield takeLatest(channelActions.getChannelsRequest.type, fetchChannelsSaga);
+  yield takeLatest(
+    channelActions.createChannelsRequest.type,
+    fetchCreateChanelSaga
+  );
 }

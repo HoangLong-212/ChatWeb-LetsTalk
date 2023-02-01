@@ -1,0 +1,41 @@
+.userInfo {
+  display: flex;
+  overflow: hidden;
+}
+
+.avatar {
+  margin-right: 12px;
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.nameTag {
+  display: flex;
+  overflow: hidden;
+  flex-grow: 1;
+  align-items: flex-end;
+}
+
+.username {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  color: var(--white);
+  font-weight: 600;
+}
+
+.subText {
+  color: var(--text-channel);
+  font-size: 12px;
+}
+
+.status {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  font-size: 14px;
+}

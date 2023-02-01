@@ -9,6 +9,11 @@ import guildsSlice from "./slice/guildsSlice";
 import createGuildModalSlice from "./slice/createGuildModalSlice";
 import channelDataSlice from "./slice/channelDataSlice";
 import createTextChannelModalSlice from "./slice/createTextChannelModalSlice";
+import messageSlice from "./slice/messageSlice";
+import peerSlice from "./slice/peerSlice";
+import imageSlice from "./slice/imageSlice";
+import InviteMemberModal from "./slice/InviteMemberModal";
+import memberServerSlice from "./slice/memberServerSlice";
 
 const sagaMiddleware = createSagaMiddleware();
 const store = configureStore({
@@ -20,7 +25,12 @@ const store = configureStore({
     guilds: guildsSlice,
     createGuildModal: createGuildModalSlice,
     createTextChannelModal: createTextChannelModalSlice,
+    InviteMemberModal: InviteMemberModal,
     channelData: channelDataSlice,
+    message: messageSlice,
+    peer: peerSlice,
+    image: imageSlice,
+    memberServer: memberServerSlice,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

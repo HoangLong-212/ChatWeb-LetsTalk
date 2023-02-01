@@ -2,16 +2,19 @@ import React from "react";
 import classNames from "classnames/bind";
 import styles from "./HeaderContent.module.scss";
 import { TbHash } from "react-icons/tb";
-import { IoNotifications } from "react-icons/io5";
+import { IoNotifications, IoCall } from "react-icons/io5";
 import { RiPushpinFill } from "react-icons/ri";
 import { HiUsers, HiInbox, HiQuestionMarkCircle } from "react-icons/hi";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import InviteMemberModal from "src/components/Modal/InviteMemberModal/InviteMemberModal";
+import { useDispatch } from "react-redux";
+import { InviteMemberModalActions } from "src/redux/slice/InviteMemberModal";
 
 const cx = classNames.bind(styles);
 function HeaderContent({ className, channelName }) {
   const icons = [
+    IoCall,
     IoNotifications,
-    RiPushpinFill,
     HiUsers,
     HiInbox,
     HiQuestionMarkCircle,
@@ -20,8 +23,10 @@ function HeaderContent({ className, channelName }) {
   const classes = cx("wrapper", {
     [className]: className,
   });
-
+  const navigate = useNavigate();
+  const { serverId } = useParams();
   // console.log("asd", channelId);
+  const dispatch = useDispatch();
 
   return (
     <div className={classes}>
@@ -30,9 +35,18 @@ function HeaderContent({ className, channelName }) {
         <div className={cx("text")}>{channelName}</div>
       </div>
       <div className={cx("toolbar")}>
-        {icons.map((Icon, i) => (
-          <Icon key={i} className={cx("icon")} />
-        ))}
+        {icons.map((Icon, i) => {
+          if (i === 0) {
+            return (
+              <Icon
+                key={i}
+                className={cx("icon")}
+                onClick={() => navigate(`/callVideo/${serverId}`)}
+              />
+            );
+          }
+          return <Icon key={i} className={cx("icon")} />;
+        })}
       </div>
     </div>
   );

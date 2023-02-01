@@ -1,0 +1,136 @@
+.wrapper {
+  height: 100%;
+  display: flex;
+  position: relative;
+  overflow: hidden;
+  transform: translateZ(0);
+}
+
+.peopleColumn {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  overflow: hidden;
+}
+
+.searchBar {
+  margin: 16px 20px 8px 30px;
+  :global {
+    .ant-input-affix-wrapper-focused,
+    .ant-input-affix-wrapper:focus {
+      border-color: none;
+      box-shadow: none;
+      border-right-width: 0px;
+    }
+
+    .ant-input-affix-wrapper,
+    .ant-input-group-addon {
+      background-color: var(--server-list);
+      border: none;
+    }
+
+    .ant-input-affix-wrapper {
+      border-top-left-radius: 4px !important;
+      border-bottom-left-radius: 4px !important;
+    }
+
+    .ant-input-group-addon {
+      border-top-right-radius: 4px !important;
+      border-bottom-right-radius: 4px !important;
+    }
+
+    .ant-btn {
+      border: none;
+    }
+
+    .ant-btn-icon-only > * {
+      font-size: 21px !important;
+    }
+  }
+}
+
+.title {
+  margin: 16px 20px 8px 30px;
+  color: var(--text-channel);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  text-transform: uppercase;
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 0.032em;
+  font-weight: 600;
+}
+
+.peopleList {
+  overflow: hidden scroll;
+  padding-bottom: 8px;
+  margin-top: 8px;
+}
+
+.dataUser {
+  flex: 0 1 30%;
+  min-width: 360px;
+  max-width: 420px;
+  background: var(--background-icon-left-bar);
+}
+
+.container {
+  height: 100%;
+  // padding: 16px;
+  border-left: 1px solid #4f545c7a;
+  margin-left: 2px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  background-color: var(--panels);
+}
+
+.background {
+  height: 150px;
+  cursor: default;
+}
+
+.avatar {
+  position: absolute !important;
+  top: 98px;
+  left: 30px;
+  width: 100px !important;
+  height: 100px !important;
+  border: 8px solid var(--panels);
+  border-radius: 50%;
+  cursor: default;
+}
+
+.section {
+  padding-top: 12px;
+  color: var(--white);
+}
+
+.info {
+  position: relative;
+  background-color: var(--tooltip-user-profile);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  margin: 16px;
+  margin-top: 64px;
+  padding: 0 12px 12px;
+}
+
+.divider {
+  margin-top: 12px;
+  height: 1px;
+  position: sticky;
+  top: 0;
+  background-color: #4f545c7a;
+}
+
+.username{
+  font-size: 2rem;
+}
+
+.since{
+  font-size: 12px;
+}

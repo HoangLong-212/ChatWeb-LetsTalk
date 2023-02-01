@@ -7,25 +7,46 @@ import {
   createTextChannelModalActions,
   createTextChannelModalState$,
 } from "src/redux/slice/createTextChannelModalSlice";
+import { useParams } from "react-router-dom";
+import { channelActions } from "src/redux/slice/channelsSlice";
 
 const cx = classNames.bind(styles);
 function CreateTextChannelModal({ className }) {
   const dispatch = useDispatch();
   const { isShow } = useSelector(createTextChannelModalState$);
   const token = localStorage.getItem("Auth_token");
-
+  const { serverId } = useParams();
+  const [channelForm, setChannelForm] = useState({
+    guildId: "",
+    nameChannel: "",
+    token: token,
+  });
+  // console.log(channelForm);
   const handleOk = () => {
     // formData.append("avatar", serverForm.file);
     // formData.append("serverName", serverForm.name);
     // for (const value of formData.values()) {
     //   console.log(value);
     // }
-    // dispatch(guildsActions.createGuildsRequest({ formData, token }));
+    // console.log("serverId", serverId);
+    setChannelForm({
+      ...channelForm,
+      guildId: serverId,
+    });
+    // console.log(channelForm);
+
+    dispatch(
+      channelActions.createChannelsRequest({
+        guildId: serverId,
+        nameChannel: channelForm.nameChannel,
+        token: token,
+      })
+    );
     handleCancel();
   };
 
   const handleCancel = () => {
-    // setServerForm({ ...serverForm, file: "", avatar: "", name: "" });
+    setChannelForm({ guildId: "", nameChannel: "", token: token });
     dispatch(createTextChannelModalActions.hideModal());
   };
 
@@ -44,12 +65,12 @@ function CreateTextChannelModal({ className }) {
         onFinish={{}}
         onFinishFailed={{}}
         autoComplete="off"
-        // fields={[
-        //   {
-        //     name: ["server"],
-        //     value: serverForm.name,
-        //   },
-        // ]}
+        fields={[
+          {
+            name: ["channel"],
+            value: channelForm.nameChannel,
+          },
+        ]}
       >
         <Form.Item
           label="Channel name"
@@ -63,10 +84,10 @@ function CreateTextChannelModal({ className }) {
         >
           <Input
             placeholder="new-channel"
-            // value={serverForm.name}
-            // onChange={(e) =>
-            //   setServerForm({ ...serverForm, name: e.target.value })
-            // }
+            value={channelForm.nameChannel}
+            onChange={(e) =>
+              setChannelForm({ ...channelForm, nameChannel: e.target.value })
+            }
           />
         </Form.Item>
       </Form>

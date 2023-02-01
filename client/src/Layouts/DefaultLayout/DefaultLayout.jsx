@@ -17,15 +17,18 @@ import {
 } from "src/redux/slice/channelDataSlice";
 import { BsFillGearFill, BsHeadphones } from "react-icons/bs";
 import { MdMic } from "react-icons/md";
+import SideBarMe from "../components/SideBar/SideBarMe/SideBarMe";
+import { socket } from "src/constants/socket";
 
 const cx = classNames.bind(styles);
-function DefaultLayout({ children }) {
+
+function DefaultLayout({ children, SideBarLayout, Header }) {
   const dispatch = useDispatch();
   const user = useSelector(userState$);
   const guilds = useSelector(guildsState$);
   const channel = useSelector(channelDataState$);
   let params = useParams();
-
+  // console.log("user", user);
   useEffect(() => {
     const token = { authorization: localStorage.getItem("Auth_token") };
     dispatch(getUserRequest(token));
@@ -36,6 +39,13 @@ function DefaultLayout({ children }) {
     }
   }, [dispatch, params.channelId]);
 
+  // useEffect(() => {
+  //   if (user.data !== null) {
+  //     console.log("user.data")
+  //     socket.emit("signin", user?.data?._id);
+  //   }
+  // }, [user, socket]);
+
   // console.log(user);
 
   // console.log("channels", channel);
@@ -44,7 +54,9 @@ function DefaultLayout({ children }) {
       <LeftNav className={cx("left-nav")} listData={guilds?.listGuild} />
       <div className={cx("base")}>
         <div className={cx("sub-sidebar")}>
-          <SideBar />
+          <SideBarLayout />
+
+          {/* <SideBarMe /> */}
           <div className={cx("panels")}>
             <div className={cx("inner-panels")}>
               <div className={cx("avatar-wrapper")}>
@@ -75,9 +87,7 @@ function DefaultLayout({ children }) {
         </div>
         <div className={cx("container")}>
           <div className={cx("header")}>
-            <HeaderContent channelName={channel?.channel?.name} />
-            {/* <HeaderDM /> */}
-            {/* <HeaderFriend /> */}
+            <Header channelName={channel?.channel?.name} />
           </div>
           <div className={cx("content")}>{children}</div>
         </div>

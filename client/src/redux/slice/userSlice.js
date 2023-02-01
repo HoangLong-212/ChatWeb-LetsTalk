@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { socket } from "src/constants/socket";
 
 const initialState = {
   data: null,
@@ -19,6 +20,9 @@ export const userSlice = createSlice({
       state.message = action.payload.message;
       state.success = action.payload.success;
       state.isLoading = false;
+      console.log("action.payload.user._id", action.payload.user._id);
+      socket.emit("signin", action.payload.user._id);
+      // console.log("22");
     },
     getUserFailure: (state, action) => {
       state.message = action.payload.message;

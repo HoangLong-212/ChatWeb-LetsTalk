@@ -3,11 +3,12 @@ import classNames from "classnames/bind";
 import styles from "./HeaderFriend.module.scss";
 import { HiInbox, HiQuestionMarkCircle } from "react-icons/hi";
 import { FaUserFriends } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 const cx = classNames.bind(styles);
 function HeaderFriend({ className }) {
   const icons = [HiInbox, HiQuestionMarkCircle];
-
+  const navigate = useNavigate();
   const classes = cx("wrapper", {
     [className]: className,
   });
@@ -22,9 +23,13 @@ function HeaderFriend({ className }) {
         </div>
         <div className={cx("divider")}></div>
         <div className={cx("tabBar")}>
-          <div className={cx("item")}>Online</div>
-          <div className={cx("item")}>All</div>
-          <div className={cx("item")}>Pending</div>
+          <div className={cx("item")} onClick={() => navigate("/@me/online")}>
+            Online
+          </div>
+          <div className={cx("item")} onClick={() => navigate("/@me")}>All</div>
+          <div className={cx("item")} onClick={() => navigate("/@me/pending")}>
+            Pending
+          </div>
           <div className={cx("item")}>Blocked</div>
           <div className={cx("item", "addFriend")}>
             <span>Add Friend</span>

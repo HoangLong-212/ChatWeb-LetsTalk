@@ -1,8 +1,52 @@
 .avatar {
+  position: relative;
   width: 32px;
   height: 32px;
 
   img {
     border-radius: 50%;
+  }
+}
+
+.status {
+  position: absolute;
+  right: -1px;
+  bottom: -1px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: var(--bug-hunter-green-1);
+}
+
+.large {
+  .status {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 20px;
+    height: 20px;
+  }
+
+  .off {
+    width: 10px !important;
+    height: 10px !important;
+    border-radius: 50%;
+    background-color: var(--panels);
+  }
+}
+
+.offline {
+  .status {
+    background-color: var(--invisible);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .off {
+      width: 5.5px;
+      height: 5.5px;
+      border-radius: 50%;
+      background-color: var(--panels);
+    }
   }
 }

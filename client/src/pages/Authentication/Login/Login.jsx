@@ -6,6 +6,7 @@ import classNames from "classnames/bind";
 import styles from "./Login.module.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { loginRequest, userLoginState$ } from "src/redux/slice/userLoginSlice";
+import { socket } from "src/constants/socket";
 
 const cx = classNames.bind(styles);
 function Login() {
@@ -20,7 +21,10 @@ function Login() {
   useEffect(() => {
     if (authLogin.success) {
       console.log(authLogin.message);
+      console.log(authLogin);
       navigate("/@me");
+
+      socket.emit("signin", authLogin.data._id);
     } else {
       console.log(authLogin.message);
     }
